@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TigerHead — Validation Coupon</title>
+<style>
+:root{
+  --red:#d91e18; --red-deep:#8f0f0c;
+  --gold:#ffd76a; --gold-deep:#c98f1b;
+  --bg0:#160405; --bg1:#2b0809;
+  --card:rgba(255,255,255,.055); --card-border:rgba(255,215,106,.20);
+  --text:#fdf6e3; --text-dim:rgba(253,246,227,.62);
+  --green:#4be38a; --error:#ff6b6b;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,"PingFang SC",sans-serif;
+  color:var(--text);min-height:100vh;
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(217,30,24,.38), transparent 60%),
+    radial-gradient(80% 50% at 85% 110%, rgba(201,143,27,.22), transparent 60%),
+    linear-gradient(160deg, var(--bg1) 0%, var(--bg0) 55%, #0b0203 100%);
+  background-attachment:fixed;
+}
+.wrap{max-width:460px;margin:0 auto;padding:28px 20px 48px}
+.hero{text-align:center;margin-bottom:18px}
+.hero img{width:72px;height:72px;object-fit:contain;border-radius:18px;background:rgba(255,255,255,.96);padding:6px;box-shadow:0 0 0 2px rgba(255,215,106,.55)}
+.hero h1{margin-top:12px;font-size:22px;font-weight:900;color:var(--gold)}
+.hero p{margin-top:4px;font-size:13px;color:var(--text-dim)}
+.card{margin-top:16px;padding:20px;border-radius:20px;background:var(--card);border:1px solid var(--card-border);backdrop-filter:blur(12px);box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.card h2{font-size:16px;font-weight:800;margin-bottom:10px}
+.hint{font-size:12.5px;color:var(--text-dim);line-height:1.6;margin-bottom:12px}
+input{
+  width:100%;padding:13px 16px;border-radius:14px;border:1.5px solid var(--card-border);
+  background:rgba(0,0,0,.30);color:var(--text);font-size:15px;font-weight:600;letter-spacing:.05em;
+  outline:none;transition:border-color .2s;
+}
+input:focus{border-color:var(--gold)}
+input::placeholder{color:rgba(253,246,227,.35)}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;
+  padding:14px;border:0;border-radius:14px;cursor:pointer;
+  font-size:15px;font-weight:800;color:#2b1400;letter-spacing:.02em;
+  background:linear-gradient(135deg,#ffe9a8,var(--gold) 45%,var(--gold-deep));
+  box-shadow:0 8px 22px rgba(201,143,27,.40);
+  transition:transform .2s ease;
+}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-ghost{background:rgba(255,255,255,.08);color:var(--text);box-shadow:none;border:1px solid var(--card-border)}
+.store-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border-radius:14px;background:rgba(75,227,138,.10);border:1px solid rgba(75,227,138,.35)}
+.store-bar .name{font-weight:800;color:var(--green);font-size:14px}
+.store-bar button{background:none;border:none;color:var(--text-dim);font-size:12px;cursor:pointer;text-decoration:underline}
+#video{width:100%;border-radius:16px;background:#000;aspect-ratio:1;object-fit:cover}
+.scan-frame{position:relative;border-radius:18px;overflow:hidden;border:2px solid rgba(255,215,106,.45)}
+.scan-frame::before{
+  content:"";position:absolute;inset:12px;border-radius:14px;pointer-events:none;
+  background:
+    linear-gradient(var(--gold),var(--gold)) left top/26px 3px,
+    linear-gradient(var(--gold),var(--gold)) left top/3px 26px,
+    linear-gradient(var(--gold),var(--gold)) right top/26px 3px,
+    linear-gradient(var(--gold),var(--gold)) right top/3px 26px,
+    linear-gradient(var(--gold),var(--gold)) left bottom/26px 3px,
+    linear-gradient(var(--gold),var(--gold)) left bottom/3px 26px,
+    linear-gradient(var(--gold),var(--gold)) right bottom/26px 3px,
+    linear-gradient(var(--gold),var(--gold)) right bottom/3px 26px;
+  background-repeat:no-repeat;
+}
+.result{text-align:center;padding:10px 0 4px}
+.result .icon{font-size:56px;line-height:1}
+.result .big{font-size:19px;font-weight:900;margin-top:8px}
+.result .small{font-size:13px;color:var(--text-dim);margin-top:6px;line-height:1.6}
+.result.ok .big{color:var(--green)}
+.result.fail .big{color:var(--error)}
+.divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--text-dim);font-size:12px}
+.divider::before,.divider::after{content:"";flex:1;border-top:1px dashed rgba(255,255,255,.15)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <img src="logo.png" alt="TigerHead">
+    <h1>Validation Coupon</h1>
+    <p>Portail vendeur · Fête des Partenaires</p>
+  </div>
+
+  <!-- 门店绑定 -->
+  <div class="card" id="bindCard">
+    <h2>Lier votre magasin</h2>
+    <p class="hint">Entrez le code de liaison fourni par l'équipe TigerHead. Une seule fois par appareil.</p>
+    <input id="bindInput" placeholder="Code de liaison (6 chiffres)" inputmode="numeric" maxlength="6">
+    <button class="btn" id="bindBtn">Lier le magasin</button>
+  </div>
+
+  <!-- 已绑定门店条 -->
+  <div class="store-bar hidden" id="storeBar">
+    <span class="name" id="storeName">—</span>
+    <button id="unbindBtn">changer</button>
+  </div>
+
+  <!-- 扫码 -->
+  <div class="card hidden" id="scanCard">
+    <h2>Scanner le coupon du client</h2>
+    <div class="scan-frame"><video id="video" playsinline muted></video></div>
+    <p class="hint" style="margin-top:10px">Pointez la caméra vers le code QR du client.</p>
+    <div class="divider">ou</div>
+    <input id="manualInput" placeholder="Saisir le code manuellement (TH-XXXX-XXXX)">
+    <button class="btn btn-ghost" id="manualBtn">Vérifier le code</button>
+  </div>
+
+  <!-- 确认 / 结果 -->
+  <div class="card hidden" id="resultCard">
+    <div class="result" id="resultBox">
+      <div class="icon" id="resultIcon">✓</div>
+      <div class="big" id="resultTitle">—</div>
+      <div class="small" id="resultDesc">—</div>
+    </div>
+    <button class="btn" id="nextBtn">Scanner le suivant</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script>
+(function(){
+'use strict';
+var API_BASE = ''; // 同域部署时留空；分离部署填 https://你的后端域名
+var LS_STORE = 'th_store_v1';
+
+var bindCard = document.getElementById('bindCard'),
+    storeBar = document.getElementById('storeBar'),
+    scanCard = document.getElementById('scanCard'),
+    resultCard = document.getElementById('resultCard'),
+    video = document.getElementById('video');
+
+var store = null, stream = null, scanning = false, locked = false;
+
+function loadStore(){ try { return JSON.parse(localStorage.getItem(LS_STORE) || 'null'); } catch(e){ return null; } }
+function saveStore(s){ localStorage.setItem(LS_STORE, JSON.stringify(s)); }
+function show(el){ el.classList.remove('hidden'); }
+function hide(el){ el.classList.add('hidden'); }
+
+function enterStoreMode(){
+  document.getElementById('storeName').textContent = store.store_name + (store.city ? ' · ' + store.city : '');
+  hide(bindCard); show(storeBar); show(scanCard); hide(resultCard);
+  startScan();
+}
+
+document.getElementById('bindBtn').addEventListener('click', function(){
+  var code = document.getElementById('bindInput').value.trim();
+  if (!code) return;
+  this.disabled = true;
+  fetch(API_BASE + '/api/store/bind', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ bind_code: code })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (d.token) { store = d; saveStore(d); enterStoreMode(); }
+    else { alert('Code invalide'); }
+  }).catch(function(){ alert('Erreur réseau'); })
+  .finally(function(){ document.getElementById('bindBtn').disabled = false; });
+});
+
+document.getElementById('unbindBtn').addEventListener('click', function(){
+  stopScan(); localStorage.removeItem(LS_STORE); store = null;
+  hide(storeBar); hide(scanCard); hide(resultCard); show(bindCard);
+});
+
+// ---------- 扫码 ----------
+function startScan(){
+  if (stream) return;
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+    .then(function(s){ stream = s; video.srcObject = s; video.play(); scanning = true; requestAnimationFrame(tick); })
+    .catch(function(){ /* 摄像头不可用时仍可手动输入 */ });
+}
+function stopScan(){
+  scanning = false;
+  if (stream) { stream.getTracks().forEach(function(t){ t.stop(); }); stream = null; }
+}
+var canvas = document.createElement('canvas'), ctx = canvas.getContext('2d', { willReadFrequently: true });
+function tick(){
+  if (!scanning) return;
+  if (video.readyState === video.HAVE_ENOUGH_DATA && !locked) {
+    canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0);
+    var img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var found = jsQR(img.data, img.width, img.height);
+    if (found && found.data) onCode(found.data);
+  }
+  requestAnimationFrame(tick);
+}
+
+function parsePayload(text){
+  // 消费者端 QR 内容格式: CODE|时间窗
+  var parts = String(text).split('|');
+  return { code: (parts[0] || '').toUpperCase().trim(), window: Number(parts[1] || 0) };
+}
+
+function onCode(text){
+  if (locked) return;
+  var p = parsePayload(text);
+  if (!/^TH-[0-9A-F]{4}-[0-9A-F]{4}$/.test(p.code)) return;
+  locked = true;
+  redeem(p.code, p.window);
+}
+
+document.getElementById('manualBtn').addEventListener('click', function(){
+  var code = document.getElementById('manualInput').value.toUpperCase().trim();
+  if (!code) return;
+  locked = true;
+  redeem(code, Math.floor(Date.now() / 30000));
+});
+
+function redeem(code, win){
+  fetch(API_BASE + '/api/redeem', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ token: store.token, code: code, window: win })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    showResult(d, code);
+  }).catch(function(){
+    showResult({ ok: false, reason: 'network' }, code);
+  });
+}
+
+function showResult(d, code){
+  hide(scanCard); show(resultCard);
+  var box = document.getElementById('resultBox'),
+      icon = document.getElementById('resultIcon'),
+      title = document.getElementById('resultTitle'),
+      desc = document.getElementById('resultDesc');
+  if (d.ok) {
+    box.className = 'result ok';
+    icon.textContent = '✓';
+    title.textContent = 'Coupon validé';
+    desc.textContent = code + ' · Remise appliquée';
+  } else {
+    box.className = 'result fail';
+    icon.textContent = '✕';
+    var map = {
+      already_redeemed: ['Déjà utilisé', 'Ce coupon a déjà été validé.'],
+      expired_qr: ['Code expiré', 'Demandez au client de réafficher son code (il se renouvelle toutes les 30 s).'],
+      not_found: ['Code introuvable', 'Vérifiez le code du client.'],
+      network: ['Erreur réseau', 'Vérifiez la connexion et réessayez.']
+    };
+    var m = map[d.reason] || ['Erreur', JSON.stringify(d)];
+    title.textContent = m[0];
+    desc.textContent = code ? code + ' · ' + m[1] : m[1];
+  }
+}
+
+document.getElementById('nextBtn').addEventListener('click', function(){
+  locked = false;
+  document.getElementById('manualInput').value = '';
+  hide(resultCard); show(scanCard);
+});
+
+// ---------- 启动 ----------
+var saved = loadStore();
+if (saved && saved.token) { store = saved; enterStoreMode(); }
+})();
+</script>
+</body>
+</html>
