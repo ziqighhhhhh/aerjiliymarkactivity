@@ -213,15 +213,8 @@ h1.title{
   animation:cornerPulse 2.4s ease-in-out infinite;
 }
 @keyframes cornerPulse{0%,100%{opacity:.65}50%{opacity:1}}
-#qr{display:block;width:172px;height:172px;transition:opacity .35s,transform .35s}
-#qr.refreshing{opacity:0;transform:rotateY(90deg)}
+#qr{display:block;width:172px;height:172px}
 
-.countdown{display:flex;align-items:center;gap:12px}
-.ring{transform:rotate(-90deg)}
-.ring .bg{stroke:rgba(255,255,255,.12)}
-.ring .fg{stroke:var(--gold);stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,215,106,.8));transition:stroke-dashoffset .3s linear}
-.count-num{font-size:22px;font-weight:900;color:var(--gold);min-width:58px;text-align:center;font-variant-numeric:tabular-nums}
-.count-txt{font-size:12.5px;color:var(--text-dim);line-height:1.5;max-width:170px}
 .qr-note{font-size:12.5px;color:var(--text-dim);text-align:center;line-height:1.7}
 
 /* 锁定遮罩 */
