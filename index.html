@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>TigerHead Battery — Offre Partenaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --animal-font: Nunito, 'Noto Sans SC', -apple-system, 'PingFang SC', sans-serif;
+    --animal-primary: #19c8b9;
+    --animal-primary-hover: #3dd4c6;
+    --animal-primary-active: #11a89b;
+    --animal-primary-bg: #e6f9f6;
+    --animal-text: #794f27;
+    --animal-text-body: #725d42;
+    --animal-text-secondary: #9f927d;
+    --animal-text-muted: #8a7b66;
+    --animal-text-disabled: #c4b89e;
+    --animal-bg: #f8f8f0;
+    --animal-bg-content: rgb(247, 243, 223);
+    --animal-border: #c4b89e;
+    --animal-border-hover: #a89878;
+    --animal-radius: 20px;
+    --animal-radius-pill: 50px;
+    --animal-shadow-btn: #bdaea0;
+    --animal-focus-yellow: #ffcc00;
+    --animal-success: #6fba2c;
+    --animal-warning: #f5c31c;
+    --animal-error: #e05a5a;
+    --animal-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+    font-family: var(--animal-font);
+    background: var(--animal-bg);
+    background-image:
+        radial-gradient(circle, rgba(25, 200, 185, 0.10) 1.5px, transparent 1.5px),
+        radial-gradient(circle, rgba(111, 186, 44, 0.06) 1px, transparent 1px);
+    background-size: 28px 28px, 14px 14px;
+    background-position: 0 0, 7px 7px;
+    color: var(--animal-text-body);
+    min-height: 100vh;
+    padding-bottom: 40px;
+}
+.wrap { max-width: 480px; margin: 0 auto; padding: 20px 16px; }
+
+/* ===== Header ===== */
+.header { text-align: center; padding: 28px 0 8px; animation: ac-fade-up 0.5s ease-out; }
+.logo-img {
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    border-radius: 24px;
+    background: #fff;
+    padding: 8px;
+    border: 2px solid var(--animal-border);
+    margin-bottom: 12px;
+}
+.brand-pill {
+    display: inline-block;
+    background: var(--animal-primary);
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    padding: 6px 18px;
+    border-radius: var(--animal-radius-pill);
+    box-shadow: 0 3px 0 0 var(--animal-primary-active);
+    margin-bottom: 14px;
+}
+.header h1 {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--animal-text);
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+}
+.header p {
+    margin-top: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--animal-text-muted);
+}
+
+/* ===== Card ===== */
+.card {
+    background: var(--animal-bg-content);
+    border: 2px solid var(--animal-border);
+    border-radius: var(--animal-radius);
+    padding: 20px 22px;
+    margin-top: 16px;
+    animation: ac-fade-up 0.5s ease-out;
+}
+.card-dashed {
+    border: 2px dashed #e8dcc8;
+    background: rgb(250, 248, 242);
+}
+.step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--animal-primary);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 15px; font-weight: 800;
+    box-shadow: 0 2px 4px rgba(25, 200, 185, 0.3);
+    margin-right: 10px;
+}
+.card h2 {
+    display: flex; align-items: center;
+    font-size: 17px; font-weight: 700;
+    color: var(--animal-text);
+    margin-bottom: 8px;
+}
+.card p.desc {
+    font-size: 13px; font-weight: 500;
+    color: var(--animal-text-muted);
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+
+/* ===== Buttons ===== */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: var(--animal-radius-pill);
+    font-family: var(--animal-font);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.2s var(--animal-ease);
+    user-select: none;
+}
+.btn:focus-visible { outline: 2px solid var(--animal-primary); outline-offset: 2px; }
+.btn-primary {
+    background: #f8f8f0;
+    color: var(--animal-text);
+    border: 2px solid var(--animal-border);
+    box-shadow: 0 5px 0 0 var(--animal-shadow-btn);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 0 0 var(--animal-shadow-btn); border-color: var(--animal-border-hover); }
+.btn-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 0 var(--animal-shadow-btn); }
+.btn-primary:disabled { opacity: 0.5; transform: none; cursor: not-allowed; }
+.btn-mint {
+    background: var(--animal-primary);
+    color: #fff;
+    box-shadow: 0 5px 0 0 var(--animal-primary-active);
+}
+.btn-mint:hover { background: var(--animal-primary-hover); transform: translateY(-1px); box-shadow: 0 6px 0 0 var(--animal-primary-active); }
+.btn-mint:active { transform: translateY(2px); box-shadow: 0 1px 0 0 var(--animal-primary-active); }
+.btn-fb {
+    background: #889df0;
+    color: #fff;
+    box-shadow: 0 5px 0 0 #6b7fd0;
+}
+.btn-fb:hover { transform: translateY(-1px); box-shadow: 0 6px 0 0 #6b7fd0; }
+.btn-fb:active { transform: translateY(2px); box-shadow: 0 1px 0 0 #6b7fd0; }
+.btn.loading {
+    background: #0ec4b6;
+    color: #fff;
+    border: none;
+    background-image: repeating-linear-gradient(-45deg, #0ec4b6 0 10px, #01b0a7 10px 20px);
+    background-size: 28.28px 28.28px;
+    animation: stripe 1s linear infinite;
+    pointer-events: none;
+}
+@keyframes stripe { to { background-position: -28.28px 0; } }
+
+/* ===== Coupon card ===== */
+.coupon {
+    background: #fff;
+    border: 2.5px solid var(--animal-primary);
+    border-radius: var(--animal-radius);
+    overflow: hidden;
+    margin-top: 16px;
+    animation: ac-fade-up 0.4s ease-out;
+}
+.coupon-top {
+    background: var(--animal-primary-bg);
+    padding: 16px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px dashed var(--animal-border);
+}
+.coupon-offer { font-size: 20px; font-weight: 900; color: var(--animal-text); }
+.tag {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--animal-success);
+    color: #fff;
+}
+.tag.used { background: var(--animal-text-disabled); }
+.tag.expired { background: var(--animal-error); }
+.coupon-body { padding: 20px 22px; text-align: center; }
+.qr-box {
+    display: inline-block;
+    background: #fff;
+    padding: 12px;
+    border-radius: 16px;
+    border: 2px solid var(--animal-border);
+}
+.coupon-code {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--animal-text);
+    font-variant-numeric: tabular-nums;
+}
+.refresh-bar {
+    margin-top: 14px;
+    height: 12px;
+    border-radius: 999px;
+    background: var(--animal-bg);
+    border: 1.5px solid #e8dcc8;
+    box-shadow: inset 0 2px 4px rgba(114, 93, 66, 0.08);
+    overflow: hidden;
+    position: relative;
+}
+.refresh-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: #0ec4b6;
+    background-image: repeating-linear-gradient(-45deg, #0ec4b6 0 10px, #01b0a7 10px 20px);
+    background-size: 28.28px 28.28px;
+    animation: stripe 1s linear infinite;
+    transition: width 1s linear;
+}
+.refresh-text {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--animal-text-secondary);
+}
+.coupon-note {
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--animal-text-muted);
+    line-height: 1.6;
+}
+
+/* ===== Rules ===== */
+.rules li {
+    list-style: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--animal-text-muted);
+    line-height: 1.8;
+    padding-left: 20px;
+    position: relative;
+}
+.rules li::before {
+    content: '';
+    position: absolute;
+    left: 4px; top: 10px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--animal-primary);
+}
+
+/* ===== Notification ===== */
+.notif {
+    position: fixed;
+    top: 20px; left: 50%;
+    transform: translateX(-50%) translateY(-16px);
+    opacity: 0;
+    background: var(--animal-bg-content);
+    border: 2px solid var(--animal-border);
+    border-radius: 18px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--animal-text-body);
+    box-shadow: 0 6px 18px rgba(61, 52, 40, 0.14);
+    transition: all 0.25s var(--animal-ease);
+    z-index: 2000;
+    pointer-events: none;
+    max-width: calc(100vw - 48px);
+}
+.notif.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.notif.success { border-color: var(--animal-success); }
+.notif.error { border-color: var(--animal-error); }
+
+@keyframes ac-fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+    <div class="header">
+        <img src="logo.png" alt="TigerHead" class="logo-img">
+        <div class="brand-pill">TIGERHEAD BATTERY</div>
+        <h1>Fête des Partenaires<br>Algérie Q3</h1>
+        <p>Scannez. Recevez. Économisez en magasin.</p>
+    </div>
+
+    <!-- Step 1: FB follow -->
+    <div class="card" id="fbCard">
+        <h2><span class="step-num">1</span>Suivez-nous sur Facebook</h2>
+        <p class="desc">Suivez la page officielle TigerHead pour rester informé des promotions.</p>
+        <button class="btn btn-fb" id="fbBtn">Suivre sur Facebook</button>
+    </div>
+
+    <!-- Step 2: claim -->
+    <div class="card" id="claimCard">
+        <h2><span class="step-num">2</span>Recevez votre coupon</h2>
+        <p class="desc" id="offerDesc">Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.</p>
+        <button class="btn btn-primary" id="claimBtn">Recevoir mon coupon</button>
+    </div>
+
+    <!-- Coupon display -->
+    <div class="coupon hidden" id="couponCard">
+        <div class="coupon-top">
+            <span class="coupon-offer" id="offerText">Coupon</span>
+            <span class="tag" id="couponStatus">Actif</span>
+        </div>
+        <div class="coupon-body">
+            <div class="qr-box"><div id="qrcode"></div></div>
+            <div class="coupon-code" id="couponCode">—</div>
+            <div class="refresh-bar"><div class="refresh-fill" id="refreshFill" style="width:100%"></div></div>
+            <div class="refresh-text">Le code QR se renouvelle dans <span id="countdown">30</span> s</div>
+            <div class="coupon-note">Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.</div>
+        </div>
+    </div>
+
+    <!-- Rules -->
+    <div class="card card-dashed" style="margin-top:20px">
+        <h2 style="font-size:15px">Conditions d'utilisation</h2>
+        <ul class="rules">
+            <li>Un coupon par appareil.</li>
+            <li>Un coupon par achat en magasin partenaire.</li>
+            <li>Valable jusqu'à la fin de la campagne Q3.</li>
+            <li>Le vendeur scanne le code pour valider la remise.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+(function () {
+    'use strict';
+
+    var FB_PAGE_URL = 'https://www.facebook.com/TigerHeadBattery';
+    var API_BASE = ''; // 同域部署; 后端就绪后填 /api
+    var LS_KEY = 'th_coupon_v1';
+    var QR_WINDOW = 30; // seconds
+
+    // ---------- 设备指纹（简化版） ----------
+    function fingerprint() {
+        var raw = [
+            navigator.userAgent,
+            navigator.language,
+            screen.width + 'x' + screen.height,
+            screen.colorDepth,
+            new Date().getTimezoneOffset(),
+            navigator.hardwareConcurrency || '',
+            navigator.deviceMemory || ''
+        ].join('|');
+        var h = 0;
+        for (var i = 0; i < raw.length; i++) {
+            h = ((h << 5) - h + raw.charCodeAt(i)) | 0;
+        }
+        return 'fp_' + Math.abs(h).toString(36);
+    }
+
+    // ---------- 工具 ----------
+    var notifTimer = null;
+    function notify(msg, type) {
+        var el = document.getElementById('notif');
+        el.textContent = msg;
+        el.className = 'notif show ' + (type || '');
+        clearTimeout(notifTimer);
+        notifTimer = setTimeout(function () { el.className = 'notif'; }, 2600);
+    }
+
+    function loadLocal() {
+        try { return JSON.parse(localStorage.getItem(LS_KEY) || 'null'); }
+        catch (e) { return null; }
+    }
+    function saveLocal(c) { localStorage.setItem(LS_KEY, JSON.stringify(c)); }
+
+    // ---------- API（带本地 mock 回退，后端未就绪也能演示） ----------
+    function apiClaim(fp) {
+        if (!API_BASE) {
+            return new Promise(function (resolve) {
+                setTimeout(function () {
+                    var seg = function () { return Math.random().toString(36).slice(2, 6).toUpperCase(); };
+                    resolve({ code: 'TH-' + seg() + '-' + seg(), offer: '-10% Batteries Alcalines', status: 'active' });
+                }, 700);
+            });
+        }
+        return fetch(API_BASE + '/claim', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fingerprint: fp })
+        }).then(function (r) { return r.json(); });
+    }
+
+    function apiStatus(code) {
+        if (!API_BASE) return Promise.resolve(null);
+        return fetch(API_BASE + '/coupon/status?code=' + encodeURIComponent(code))
+            .then(function (r) { return r.json(); })
+            .catch(function () { return null; });
+    }
+
+    // ---------- QR 动态刷新 ----------
+    var qrObj = null, qrTimer = null, cdTimer = null, remain = QR_WINDOW;
+    function qrPayload(coupon) {
+        // 内容 = code + 时间窗（后端用 HMAC(时间窗) 校验）
+        return coupon.code + '|' + Math.floor(Date.now() / (QR_WINDOW * 1000));
+    }
+    function renderQR(coupon) {
+        var el = document.getElementById('qrcode');
+        el.innerHTML = '';
+        qrObj = new QRCode(el, {
+            text: qrPayload(coupon),
+            width: 200, height: 200,
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    }
+    function startQrCycle(coupon) {
+        clearInterval(qrTimer); clearInterval(cdTimer);
+        remain = QR_WINDOW;
+        renderQR(coupon);
+        document.getElementById('countdown').textContent = remain;
+        document.getElementById('refreshFill').style.width = '100%';
+        cdTimer = setInterval(function () {
+            remain--;
+            if (remain <= 0) {
+                remain = QR_WINDOW;
+                renderQR(coupon);
+            }
+            document.getElementById('countdown').textContent = remain;
+            document.getElementById('refreshFill').style.width = (remain / QR_WINDOW * 100) + '%';
+        }, 1000);
+    }
+
+    // ---------- 状态展示 ----------
+    function showCoupon(coupon) {
+        document.getElementById('claimCard').classList.add('hidden');
+        document.getElementById('couponCard').classList.remove('hidden');
+        document.getElementById('offerText').textContent = coupon.offer || 'Coupon';
+        document.getElementById('couponCode').textContent = coupon.code;
+        setStatus(coupon.status || 'active');
+        if ((coupon.status || 'active') === 'active') startQrCycle(coupon);
+    }
+    function setStatus(st) {
+        var el = document.getElementById('couponStatus');
+        el.className = 'tag' + (st === 'redeemed' ? ' used' : st === 'expired' ? ' expired' : '');
+        el.textContent = st === 'redeemed' ? 'Utilisé' : st === 'expired' ? 'Expiré' : 'Actif';
+        if (st !== 'active') {
+            clearInterval(cdTimer);
+            document.getElementById('refreshFill').style.width = '0%';
+            document.querySelector('.refresh-text').textContent = st === 'redeemed' ? 'Coupon déjà utilisé' : 'Coupon expiré';
+        }
+    }
+
+    // ---------- 初始化 ----------
+    var fp = fingerprint();
+    var existing = loadLocal();
+    if (existing && existing.code) {
+        showCoupon(existing);
+        apiStatus(existing.code).then(function (s) {
+            if (s && s.status && s.status !== existing.status) {
+                existing.status = s.status;
+                saveLocal(existing);
+                setStatus(s.status);
+            }
+        });
+    }
+
+    document.getElementById('fbBtn').addEventListener('click', function () {
+        window.open(FB_PAGE_URL, '_blank');
+    });
+
+    document.getElementById('claimBtn').addEventListener('click', function () {
+        var btn = this;
+        if (loadLocal()) { notify('Vous avez déjà un coupon', 'error'); return; }
+        btn.classList.add('loading');
+        btn.textContent = 'Chargement...';
+        apiClaim(fp).then(function (coupon) {
+            coupon.fingerprint = fp;
+            saveLocal(coupon);
+            showCoupon(coupon);
+            notify('Coupon reçu !', 'success');
+        }).catch(function () {
+            btn.classList.remove('loading');
+            btn.textContent = 'Recevoir mon coupon';
+            notify('Erreur réseau, réessayez', 'error');
+        });
+    });
+
+    // 状态轮询（30s）：核销后消费者端同步显示"已使用"
+    setInterval(function () {
+        var c = loadLocal();
+        if (!c || c.status !== 'active') return;
+        apiStatus(c.code).then(function (s) {
+            if (s && s.status && s.status !== c.status) {
+                c.status = s.status;
+                saveLocal(c);
+                setStatus(s.status);
+            }
+        });
+    }, 30000);
+})();
+</script>
+</body>
+</html>
