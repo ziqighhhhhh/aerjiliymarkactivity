@@ -213,15 +213,8 @@ h1.title{
   animation:cornerPulse 2.4s ease-in-out infinite;
 }
 @keyframes cornerPulse{0%,100%{opacity:.65}50%{opacity:1}}
-#qr{display:block;width:172px;height:172px;transition:opacity .35s,transform .35s}
-#qr.refreshing{opacity:0;transform:rotateY(90deg)}
+#qr{display:block;width:172px;height:172px}
 
-.countdown{display:flex;align-items:center;gap:12px}
-.ring{transform:rotate(-90deg)}
-.ring .bg{stroke:rgba(255,255,255,.12)}
-.ring .fg{stroke:var(--gold);stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,215,106,.8));transition:stroke-dashoffset .3s linear}
-.count-num{font-size:22px;font-weight:900;color:var(--gold);min-width:58px;text-align:center;font-variant-numeric:tabular-nums}
-.count-txt{font-size:12.5px;color:var(--text-dim);line-height:1.5;max-width:170px}
 .qr-note{font-size:12.5px;color:var(--text-dim);text-align:center;line-height:1.7}
 
 /* 锁定遮罩 */
@@ -312,19 +305,8 @@ h1.title{
 
     <div class="ticket-cut"></div>
 
-    <div class="qr-zone">
+      <div class="qr-zone">
       <div class="qr-frame"><canvas id="qr" width="172" height="172"></canvas></div>
-      <div class="countdown">
-        <svg class="ring" width="46" height="46" viewBox="0 0 46 46">
-          <circle class="bg" cx="23" cy="23" r="19" fill="none" stroke-width="4"/>
-          <circle class="fg" id="ringFg" cx="23" cy="23" r="19" fill="none" stroke-width="4"
-                  stroke-dasharray="119.4" stroke-dashoffset="0"/>
-        </svg>
-        <div>
-          <div class="count-num" id="countNum">30s</div>
-          <div class="count-txt" data-i18n="renew">Le code QR se renouvelle automatiquement</div>
-        </div>
-      </div>
       <p class="qr-note" data-i18n="note">Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.</p>
     </div>
 
@@ -355,7 +337,7 @@ h1.title{
    配置区 —— 部署前请改成你自己的内容
    ============================================================ */
 const FB_URL = 'https://www.facebook.com/tigerheadbattery'; // ← 替换为你的 Facebook 主页链接
-const QR_INTERVAL = 30;                                      // 二维码刷新间隔（秒）
+const BACKEND_URL = ''; // 本机测试时留空；部署到 Pages 后改成 https://你的后端域名
 
 /* ============================================================
    双语
@@ -374,7 +356,6 @@ const I18N = {
     s2d:'Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.',
     active:'Actif',
     used:'Utilisé',
-    renew:'Le code QR se renouvelle automatiquement',
     note:'Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.',
     locked:'Suivez la page Facebook<br>pour débloquer votre coupon',
     termsT:"Conditions d'utilisation",
@@ -396,7 +377,6 @@ const I18N = {
     s2d:'碱性电池折扣券，每台设备限领一张。',
     active:'生效中',
     used:'已使用',
-    renew:'二维码将自动刷新',
     note:'结账时向店员出示此码。<br>每次消费限用一张。',
     locked:'关注 Facebook 后<br>即可解锁你的优惠券',
     termsT:'使用条款',
@@ -488,12 +468,12 @@ function confLoop(){
 }
 
 /* ============================================================
-   二维码：真实券码 + 30 秒动态刷新
+   二维码：真实券码（静态 QR）
    ============================================================ */
 const qr=document.getElementById('qr');
 const LS_COUPON='th_coupon_v1';
 const IS_LOCAL=['localhost','127.0.0.1'].includes(location.hostname);
-const API_BASE=IS_LOCAL?'/api':''; // 本机 node server 直连；部署到 Pages 后改成 https://你的后端域名/api
+const API_BASE=(IS_LOCAL?'/api':BACKEND_URL.replace(/\/$/,''));
 let coupon=null;
 
 function fingerprint(){
@@ -503,35 +483,20 @@ function fingerprint(){
 }
 function mockCode(){const s=()=>Math.random().toString(16).slice(2,6).toUpperCase();return 'TH-'+s()+'-'+s()}
 async function apiClaim(fp){
-  if(!IS_LOCAL){await new Promise(r=>setTimeout(r,500));return {code:mockCode(),status:'claimed',offer:'-10% Batteries Alcalines'}}
+  if(!API_BASE){await new Promise(r=>setTimeout(r,500));return {code:mockCode(),status:'claimed',offer:'-10% Batteries Alcalines'}}
   const r=await fetch(API_BASE+'/claim',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fingerprint:fp})});
   if(!r.ok)throw new Error('claim failed');
   return r.json();
 }
 async function apiStatus(code){
-  if(!IS_LOCAL)return null;
+  if(!API_BASE)return null;
   try{const r=await fetch(API_BASE+'/coupon/status?code='+encodeURIComponent(code));return r.ok?await r.json():null}catch(e){return null}
 }
 
 function drawQR(){
   if(!coupon)return;
-  const win=Math.floor(Date.now()/(QR_INTERVAL*1000));
-  QRCode.toCanvas(qr,coupon.code+'|'+win,{width:172,margin:1,color:{dark:'#1a0505',light:'#ffffff'}},()=>{});
+  QRCode.toCanvas(qr,coupon.code,{width:172,margin:1,color:{dark:'#1a0505',light:'#ffffff'}},()=>{});
 }
-
-const ring=document.getElementById('ringFg'),num=document.getElementById('countNum');
-const CIRC=119.4;let left=QR_INTERVAL,timer=null;
-function tick(){
-  left--;
-  if(left<=0){
-    qr.classList.add('refreshing');
-    setTimeout(()=>{drawQR();qr.classList.remove('refreshing')},360);
-    left=QR_INTERVAL;
-  }
-  num.textContent=left+'s';
-  ring.style.strokeDashoffset=CIRC*(1-left/QR_INTERVAL);
-}
-function startCountdown(){if(timer)return;num.textContent=left+'s';timer=setInterval(tick,1000)}
 
 function setStatus(st){
   const b=document.getElementById('statusBadge');
@@ -574,7 +539,7 @@ async function ensureCoupon(){
   if(coupon&&coupon.code){
     unlocked=true;
     unlockVisual();
-    drawQR();startCountdown();
+    drawQR();
     if(coupon.status==='redeemed')setStatus('redeemed');
   }
 })();
@@ -592,7 +557,7 @@ fbBtn.addEventListener('click',e=>{
   setTimeout(async()=>{
     unlockVisual();
     await ensureCoupon();
-    drawQR();startCountdown();
+    drawQR();
     const cr=couponCard.getBoundingClientRect();
     burst(cr.left+cr.width/2,cr.top+cr.height*.35);
     setTimeout(()=>burst(cr.left+cr.width*.2,cr.top+80,60),220);

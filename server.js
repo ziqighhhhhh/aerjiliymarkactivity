@@ -131,16 +131,9 @@ async function api(req, res, u) {
     const body = await readBody(req);
     const token = String(body.token || '');
     const code = String(body.code || '').toUpperCase().trim();
-    const win = Number(body.window || 0);
 
     const store = db.prepare('SELECT id, name FROM stores WHERE token = ?').get(token);
     if (!store) return json(res, 401, { error: 'invalid token' });
-
-    // 动态码时间窗：只接受当前窗和上一窗（30s 一窗），防截图重放
-    const nowWin = Math.floor(Date.now() / 30000);
-    if (!win || win < nowWin - 1 || win > nowWin) {
-      return json(res, 400, { ok: false, reason: 'expired_qr' });
-    }
 
     const coupon = db.prepare('SELECT * FROM coupons WHERE code = ?').get(code);
     if (!coupon) return json(res, 404, { ok: false, reason: 'not_found' });

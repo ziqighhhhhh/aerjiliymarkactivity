@@ -191,9 +191,9 @@ function tick(){
 }
 
 function parsePayload(text){
-  // 消费者端 QR 内容格式: CODE|时间窗
-  var parts = String(text).split('|');
-  return { code: (parts[0] || '').toUpperCase().trim(), window: Number(parts[1] || 0) };
+  // 消费者端 QR 内容格式: 券码（静态）
+  var code = String(text).split('|')[0] || '';
+  return { code: code.toUpperCase().trim() };
 }
 
 function onCode(text){
@@ -201,20 +201,20 @@ function onCode(text){
   var p = parsePayload(text);
   if (!/^TH-[0-9A-F]{4}-[0-9A-F]{4}$/.test(p.code)) return;
   locked = true;
-  redeem(p.code, p.window);
+  redeem(p.code);
 }
 
 document.getElementById('manualBtn').addEventListener('click', function(){
   var code = document.getElementById('manualInput').value.toUpperCase().trim();
   if (!code) return;
   locked = true;
-  redeem(code, Math.floor(Date.now() / 30000));
+  redeem(code);
 });
 
-function redeem(code, win){
+function redeem(code){
   fetch(API_BASE + '/api/redeem', {
     method: 'POST', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ token: store.token, code: code, window: win })
+    body: JSON.stringify({ token: store.token, code: code })
   }).then(function(r){ return r.json(); }).then(function(d){
     showResult(d, code);
   }).catch(function(){
@@ -238,7 +238,6 @@ function showResult(d, code){
     icon.textContent = '✕';
     var map = {
       already_redeemed: ['Déjà utilisé', 'Ce coupon a déjà été validé.'],
-      expired_qr: ['Code expiré', 'Demandez au client de réafficher son code (il se renouvelle toutes les 30 s).'],
       not_found: ['Code introuvable', 'Vérifiez le code du client.'],
       network: ['Erreur réseau', 'Vérifiez la connexion et réessayez.']
     };
