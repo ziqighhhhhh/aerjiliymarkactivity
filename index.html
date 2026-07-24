@@ -308,7 +308,6 @@ body {
 <div class="wrap">
     <div class="header">
         <img src="logo.png" alt="TigerHead" class="logo-img">
-        <div class="brand-pill">TIGERHEAD BATTERY</div>
         <h1>Fête des Partenaires<br>Algérie Q3</h1>
         <p>Scannez. Recevez. Économisez en magasin.</p>
     </div>
@@ -320,8 +319,8 @@ body {
         <button class="btn btn-fb" id="fbBtn">Suivre sur Facebook</button>
     </div>
 
-    <!-- Step 2: claim -->
-    <div class="card" id="claimCard">
+    <!-- Step 2: claim (FB 跳转后才出现) -->
+    <div class="card hidden" id="claimCard">
         <h2><span class="step-num">2</span>Recevez votre coupon</h2>
         <p class="desc" id="offerDesc">Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.</p>
         <button class="btn btn-primary" id="claimBtn">Recevoir mon coupon</button>
@@ -479,9 +478,11 @@ body {
     // ---------- 初始化 ----------
     var fp = fingerprint();
     var existing = loadLocal();
+    if (localStorage.getItem('th_fb_clicked') === '1' && !existing) {
+        document.getElementById('claimCard').classList.remove('hidden');
+    }
     if (existing && existing.code) {
-        showCoupon(existing);
-        apiStatus(existing.code).then(function (s) {
+        showCoupon(existing);        apiStatus(existing.code).then(function (s) {
             if (s && s.status && s.status !== existing.status) {
                 existing.status = s.status;
                 saveLocal(existing);
@@ -492,6 +493,9 @@ body {
 
     document.getElementById('fbBtn').addEventListener('click', function () {
         window.open(FB_PAGE_URL, '_blank');
+        localStorage.setItem('th_fb_clicked', '1');
+        document.getElementById('claimCard').classList.remove('hidden');
+        document.getElementById('claimCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
     document.getElementById('claimBtn').addEventListener('click', function () {
