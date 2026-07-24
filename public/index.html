@@ -85,6 +85,33 @@ body {
     color: var(--animal-text-muted);
 }
 
+/* ===== Lang toggle ===== */
+.lang-toggle {
+    display: inline-flex;
+    gap: 4px;
+    margin-top: 14px;
+    padding: 4px;
+    background: var(--animal-bg-content);
+    border: 2px solid var(--animal-border);
+    border-radius: 999px;
+}
+.lang-toggle button {
+    border: none;
+    background: transparent;
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-family: var(--animal-font);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--animal-text-muted);
+    cursor: pointer;
+    transition: all 0.2s var(--animal-ease);
+}
+.lang-toggle button.active {
+    background: #0cc0b5;
+    color: #fff9e3;
+}
+
 /* ===== Card ===== */
 .card {
     background: var(--animal-bg-content);
@@ -308,22 +335,26 @@ body {
 <div class="wrap">
     <div class="header">
         <img src="logo.png" alt="TigerHead" class="logo-img">
-        <h1>Fête des Partenaires<br>Algérie Q3</h1>
-        <p>Scannez. Recevez. Économisez en magasin.</p>
+        <h1 data-i18n="heroTitle">Fête des Partenaires<br>Algérie Q3</h1>
+        <p data-i18n="heroSub">Scannez. Recevez. Économisez en magasin.</p>
+        <div class="lang-toggle">
+            <button id="langFr" class="active">Français</button>
+            <button id="langZh">中文</button>
+        </div>
     </div>
 
     <!-- Step 1: FB follow -->
     <div class="card" id="fbCard">
-        <h2><span class="step-num">1</span>Suivez-nous sur Facebook</h2>
-        <p class="desc">Suivez la page officielle TigerHead pour rester informé des promotions.</p>
-        <button class="btn btn-fb" id="fbBtn">Suivre sur Facebook</button>
+        <h2><span class="step-num">1</span><span data-i18n="fbTitle">Suivez-nous sur Facebook</span></h2>
+        <p class="desc" data-i18n="fbDesc">Suivez la page officielle TigerHead pour rester informé des promotions.</p>
+        <button class="btn btn-fb" id="fbBtn" data-i18n="fbBtn">Suivre sur Facebook</button>
     </div>
 
     <!-- Step 2: claim (FB 跳转后才出现) -->
     <div class="card hidden" id="claimCard">
-        <h2><span class="step-num">2</span>Recevez votre coupon</h2>
-        <p class="desc" id="offerDesc">Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.</p>
-        <button class="btn btn-primary" id="claimBtn">Recevoir mon coupon</button>
+        <h2><span class="step-num">2</span><span data-i18n="claimTitle">Recevez votre coupon</span></h2>
+        <p class="desc" id="offerDesc" data-i18n="claimDesc">Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.</p>
+        <button class="btn btn-primary" id="claimBtn" data-i18n="claimBtn">Recevoir mon coupon</button>
     </div>
 
     <!-- Coupon display -->
@@ -336,19 +367,19 @@ body {
             <div class="qr-box"><div id="qrcode"></div></div>
             <div class="coupon-code" id="couponCode">—</div>
             <div class="refresh-bar"><div class="refresh-fill" id="refreshFill" style="width:100%"></div></div>
-            <div class="refresh-text">Le code QR se renouvelle dans <span id="countdown">30</span> s</div>
-            <div class="coupon-note">Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.</div>
+            <div class="refresh-text" id="refreshText"><span data-i18n="refreshPre">Le code QR se renouvelle dans</span> <span id="countdown">30</span> <span data-i18n="refreshUnit">s</span></div>
+            <div class="coupon-note" data-i18n="couponNote">Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.</div>
         </div>
     </div>
 
     <!-- Rules -->
     <div class="card card-dashed" style="margin-top:20px">
-        <h2 style="font-size:15px">Conditions d'utilisation</h2>
+        <h2 style="font-size:15px" data-i18n="rulesTitle">Conditions d'utilisation</h2>
         <ul class="rules">
-            <li>Un coupon par appareil.</li>
-            <li>Un coupon par achat en magasin partenaire.</li>
-            <li>Valable jusqu'à la fin de la campagne Q3.</li>
-            <li>Le vendeur scanne le code pour valider la remise.</li>
+            <li data-i18n="rule1">Un coupon par appareil.</li>
+            <li data-i18n="rule2">Un coupon par achat en magasin partenaire.</li>
+            <li data-i18n="rule3">Valable jusqu'à la fin de la campagne Q3.</li>
+            <li data-i18n="rule4">Le vendeur scanne le code pour valider la remise.</li>
         </ul>
     </div>
 </div>
@@ -364,6 +395,75 @@ body {
     var API_BASE = ''; // 同域部署; 后端就绪后填 /api
     var LS_KEY = 'th_coupon_v1';
     var QR_WINDOW = 30; // seconds
+
+    // ---------- i18n ----------
+    var STR = {
+        fr: {
+            heroTitle: 'Fête des Partenaires<br>Algérie Q3',
+            heroSub: 'Scannez. Recevez. Économisez en magasin.',
+            fbTitle: 'Suivez-nous sur Facebook',
+            fbDesc: 'Suivez la page officielle TigerHead pour rester informé des promotions.',
+            fbBtn: 'Suivre sur Facebook',
+            claimTitle: 'Recevez votre coupon',
+            claimDesc: 'Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.',
+            claimBtn: 'Recevoir mon coupon',
+            loading: 'Chargement...',
+            refreshPre: 'Le code QR se renouvelle dans',
+            refreshUnit: 's',
+            couponNote: 'Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.',
+            rulesTitle: "Conditions d'utilisation",
+            rule1: 'Un coupon par appareil.',
+            rule2: 'Un coupon par achat en magasin partenaire.',
+            rule3: "Valable jusqu'à la fin de la campagne Q3.",
+            rule4: 'Le vendeur scanne le code pour valider la remise.',
+            stActive: 'Actif', stUsed: 'Utilisé', stExpired: 'Expiré',
+            noteUsed: 'Coupon déjà utilisé', noteExpired: 'Coupon expiré',
+            msgAlready: 'Vous avez déjà un coupon',
+            msgSuccess: 'Coupon reçu !',
+            msgError: 'Erreur réseau, réessayez'
+        },
+        zh: {
+            heroTitle: '阿尔及利亚伙伴节<br>Q3 活动',
+            heroSub: '扫码 · 领券 · 到店省钱',
+            fbTitle: '关注我们的 Facebook 主页',
+            fbDesc: '关注虎头官方主页，第一时间获取优惠信息。',
+            fbBtn: '关注 Facebook 主页',
+            claimTitle: '领取你的优惠券',
+            claimDesc: '碱性电池优惠券，每台设备限领一张。',
+            claimBtn: '领取我的优惠券',
+            loading: '领取中...',
+            refreshPre: '二维码',
+            refreshUnit: '秒后刷新',
+            couponNote: '到店出示此码给店员扫码确认。<br>一笔消费限用一张券。',
+            rulesTitle: '使用规则',
+            rule1: '每台设备限领一张券。',
+            rule2: '合作门店内每笔消费限用一张。',
+            rule3: 'Q3 活动期间内有效。',
+            rule4: '店员扫码确认后优惠生效。',
+            stActive: '有效', stUsed: '已使用', stExpired: '已过期',
+            noteUsed: '此券已使用', noteExpired: '此券已过期',
+            msgAlready: '你已领取过优惠券',
+            msgSuccess: '领取成功！',
+            msgError: '网络错误，请重试'
+        }
+    };
+    var lang = localStorage.getItem('th_lang') || 'fr';
+    function t(k) { return STR[lang][k] || STR.fr[k] || k; }
+    function applyLang() {
+        var dict = STR[lang];
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+            var k = el.getAttribute('data-i18n');
+            if (dict[k] !== undefined) el.innerHTML = dict[k];
+        });
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'fr';
+        document.getElementById('langFr').classList.toggle('active', lang === 'fr');
+        document.getElementById('langZh').classList.toggle('active', lang === 'zh');
+        localStorage.setItem('th_lang', lang);
+        var c = loadLocal();
+        if (c && c.status) setStatus(c.status);
+    }
+    document.getElementById('langFr').addEventListener('click', function () { lang = 'fr'; applyLang(); });
+    document.getElementById('langZh').addEventListener('click', function () { lang = 'zh'; applyLang(); });
 
     // ---------- 设备指纹（简化版） ----------
     function fingerprint() {
@@ -467,11 +567,11 @@ body {
     function setStatus(st) {
         var el = document.getElementById('couponStatus');
         el.className = 'tag' + (st === 'redeemed' ? ' used' : st === 'expired' ? ' expired' : '');
-        el.textContent = st === 'redeemed' ? 'Utilisé' : st === 'expired' ? 'Expiré' : 'Actif';
+        el.textContent = st === 'redeemed' ? t('stUsed') : st === 'expired' ? t('stExpired') : t('stActive');
         if (st !== 'active') {
             clearInterval(cdTimer);
             document.getElementById('refreshFill').style.width = '0%';
-            document.querySelector('.refresh-text').textContent = st === 'redeemed' ? 'Coupon déjà utilisé' : 'Coupon expiré';
+            document.getElementById('refreshText').textContent = st === 'redeemed' ? t('noteUsed') : t('noteExpired');
         }
     }
 
@@ -482,7 +582,8 @@ body {
         document.getElementById('claimCard').classList.remove('hidden');
     }
     if (existing && existing.code) {
-        showCoupon(existing);        apiStatus(existing.code).then(function (s) {
+        showCoupon(existing);
+        apiStatus(existing.code).then(function (s) {
             if (s && s.status && s.status !== existing.status) {
                 existing.status = s.status;
                 saveLocal(existing);
@@ -500,18 +601,18 @@ body {
 
     document.getElementById('claimBtn').addEventListener('click', function () {
         var btn = this;
-        if (loadLocal()) { notify('Vous avez déjà un coupon', 'error'); return; }
+        if (loadLocal()) { notify(t('msgAlready'), 'error'); return; }
         btn.classList.add('loading');
-        btn.textContent = 'Chargement...';
+        btn.textContent = t('loading');
         apiClaim(fp).then(function (coupon) {
             coupon.fingerprint = fp;
             saveLocal(coupon);
             showCoupon(coupon);
-            notify('Coupon reçu !', 'success');
+            notify(t('msgSuccess'), 'success');
         }).catch(function () {
             btn.classList.remove('loading');
-            btn.textContent = 'Recevoir mon coupon';
-            notify('Erreur réseau, réessayez', 'error');
+            btn.textContent = t('claimBtn');
+            notify(t('msgError'), 'error');
         });
     });
 
@@ -527,6 +628,9 @@ body {
             }
         });
     }, 30000);
+
+    // 应用语言（默认法语，记住用户选择）
+    applyLang();
 })();
 </script>
 </body>
