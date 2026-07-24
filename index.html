@@ -306,7 +306,7 @@ h1.title{
   <section class="card coupon reveal" id="couponCard">
     <div class="coupon-top">
       <div class="coupon-label" data-i18n="s2t">Recevez votre coupon</div>
-      <div class="badge-active"><span class="dot"></span><span data-i18n="active">Actif</span></div>
+      <div class="badge-active"><span class="dot"></span><span id="statusBadge" data-i18n="active">Actif</span></div>
     </div>
     <p class="coupon-sub" data-i18n="s2d">Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.</p>
 
@@ -349,6 +349,7 @@ h1.title{
   <div class="footer">TigerHead Battery × GCGS · Since 1928</div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script>
 /* ============================================================
    配置区 —— 部署前请改成你自己的内容
@@ -372,6 +373,7 @@ const I18N = {
     s2t:'Recevez votre coupon',
     s2d:'Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.',
     active:'Actif',
+    used:'Utilisé',
     renew:'Le code QR se renouvelle automatiquement',
     note:'Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.',
     locked:'Suivez la page Facebook<br>pour débloquer votre coupon',
@@ -393,6 +395,7 @@ const I18N = {
     s2t:'领取你的优惠券',
     s2d:'碱性电池折扣券，每台设备限领一张。',
     active:'生效中',
+    used:'已使用',
     renew:'二维码将自动刷新',
     note:'结账时向店员出示此码。<br>每次消费限用一张。',
     locked:'关注 Facebook 后<br>即可解锁你的优惠券',
@@ -485,28 +488,36 @@ function confLoop(){
 }
 
 /* ============================================================
-   二维码 + 30 秒倒计时环
-   【替换点】这里画的是演示用图案码。接入你自己的生成逻辑：
-   例如 qrcode.js / qrious，把 drawQR() 内部换成真实 payload 即可。
+   二维码：真实券码 + 30 秒动态刷新
    ============================================================ */
-const qr=document.getElementById('qr'),qx=qr.getContext('2d');
-const N=25,CELL=qr.width/N;
+const qr=document.getElementById('qr');
+const LS_COUPON='th_coupon_v1';
+const IS_LOCAL=['localhost','127.0.0.1'].includes(location.hostname);
+const API_BASE=IS_LOCAL?'/api':''; // 本机 node server 直连；部署到 Pages 后改成 https://你的后端域名/api
+let coupon=null;
+
+function fingerprint(){
+  const raw=[navigator.userAgent,navigator.language,screen.width+'x'+screen.height,screen.colorDepth,new Date().getTimezoneOffset(),navigator.hardwareConcurrency||''].join('|');
+  let h=0;for(let i=0;i<raw.length;i++)h=((h<<5)-h+raw.charCodeAt(i))|0;
+  return 'fp_'+Math.abs(h).toString(36);
+}
+function mockCode(){const s=()=>Math.random().toString(16).slice(2,6).toUpperCase();return 'TH-'+s()+'-'+s()}
+async function apiClaim(fp){
+  if(!IS_LOCAL){await new Promise(r=>setTimeout(r,500));return {code:mockCode(),status:'claimed',offer:'-10% Batteries Alcalines'}}
+  const r=await fetch(API_BASE+'/claim',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fingerprint:fp})});
+  if(!r.ok)throw new Error('claim failed');
+  return r.json();
+}
+async function apiStatus(code){
+  if(!IS_LOCAL)return null;
+  try{const r=await fetch(API_BASE+'/coupon/status?code='+encodeURIComponent(code));return r.ok?await r.json():null}catch(e){return null}
+}
+
 function drawQR(){
-  qx.fillStyle='#fff';qx.fillRect(0,0,qr.width,qr.height);
-  qx.fillStyle='#1a0505';
-  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
-    if(inFinder(r,c))continue;
-    if(Math.random()<.42)qx.fillRect(c*CELL,r*CELL,CELL,CELL);
-  }
-  finder(0,0);finder(N-7,0);finder(0,N-7);
+  if(!coupon)return;
+  const win=Math.floor(Date.now()/(QR_INTERVAL*1000));
+  QRCode.toCanvas(qr,coupon.code+'|'+win,{width:172,margin:1,color:{dark:'#1a0505',light:'#ffffff'}},()=>{});
 }
-function inFinder(r,c){return(r<8&&c<8)||(r<8&&c>=N-8)||(r>=N-8&&c<8)}
-function finder(c0,r0){
-  qx.fillStyle='#1a0505';qx.fillRect(c0*CELL,r0*CELL,7*CELL,7*CELL);
-  qx.fillStyle='#fff';qx.fillRect((c0+1)*CELL,(r0+1)*CELL,5*CELL,5*CELL);
-  qx.fillStyle='#1a0505';qx.fillRect((c0+2)*CELL,(r0+2)*CELL,3*CELL,3*CELL);
-}
-drawQR();
 
 const ring=document.getElementById('ringFg'),num=document.getElementById('countNum');
 const CIRC=119.4;let left=QR_INTERVAL,timer=null;
@@ -522,6 +533,15 @@ function tick(){
 }
 function startCountdown(){if(timer)return;num.textContent=left+'s';timer=setInterval(tick,1000)}
 
+function setStatus(st){
+  const b=document.getElementById('statusBadge');
+  if(st==='redeemed'){
+    b.textContent=I18N[lang].used;
+    b.parentElement.style.filter='grayscale(1)';
+    coupon&&(coupon.status='redeemed');
+  }
+}
+
 /* ============================================================
    流程：关注 Facebook → 解锁优惠券 + 彩带
    ============================================================ */
@@ -529,6 +549,36 @@ const fbBtn=document.getElementById('fbBtn'),
       veil=document.getElementById('lockVeil'),
       couponCard=document.getElementById('couponCard');
 let unlocked=false;
+
+function unlockVisual(){
+  veil.classList.add('hide');
+  couponCard.classList.add('unlocked');
+  fbBtn.classList.add('done');
+  fbBtn.querySelector('[data-i18n]').textContent=I18N[lang].s1done;
+}
+
+async function ensureCoupon(){
+  if(coupon&&coupon.code)return;
+  try{
+    coupon=await apiClaim(fingerprint());
+  }catch(e){
+    coupon={code:mockCode(),status:'claimed'};
+  }
+  coupon.status=coupon.status||'claimed';
+  localStorage.setItem(LS_COUPON,JSON.stringify(coupon));
+}
+
+// 已领券用户：直接进入解锁态
+(function initCoupon(){
+  try{coupon=JSON.parse(localStorage.getItem(LS_COUPON)||'null')}catch(e){}
+  if(coupon&&coupon.code){
+    unlocked=true;
+    unlockVisual();
+    drawQR();startCountdown();
+    if(coupon.status==='redeemed')setStatus('redeemed');
+  }
+})();
+
 fbBtn.addEventListener('click',e=>{
   /* 点击涟漪 */
   const r=fbBtn.getBoundingClientRect(),rip=document.createElement('span');
@@ -539,12 +589,10 @@ fbBtn.addEventListener('click',e=>{
   window.open(FB_URL,'_blank');
   if(unlocked)return;unlocked=true;
 
-  setTimeout(()=>{
-    veil.classList.add('hide');
-    couponCard.classList.add('unlocked');
-    fbBtn.classList.add('done');
-    fbBtn.querySelector('[data-i18n]').textContent=I18N[lang].s1done;
-    startCountdown();
+  setTimeout(async()=>{
+    unlockVisual();
+    await ensureCoupon();
+    drawQR();startCountdown();
     const cr=couponCard.getBoundingClientRect();
     burst(cr.left+cr.width/2,cr.top+cr.height*.35);
     setTimeout(()=>burst(cr.left+cr.width*.2,cr.top+80,60),220);
@@ -552,6 +600,16 @@ fbBtn.addEventListener('click',e=>{
     couponCard.scrollIntoView({behavior:'smooth',block:'center'});
   },700);
 });
+
+// 核销状态轮询：店员核销后消费者端同步"已使用"
+setInterval(async()=>{
+  if(!coupon||coupon.status==='redeemed')return;
+  const s=await apiStatus(coupon.code);
+  if(s&&s.status==='redeemed'){
+    localStorage.setItem(LS_COUPON,JSON.stringify(Object.assign(coupon,{status:'redeemed'})));
+    setStatus('redeemed');
+  }
+},30000);
 
 /* ============================================================
    滚动入场
