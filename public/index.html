@@ -306,7 +306,7 @@ h1.title{
     <div class="ticket-cut"></div>
 
       <div class="qr-zone">
-      <div class="qr-frame"><canvas id="qr" width="172" height="172"></canvas></div>
+      <div class="qr-frame"><div id="qr" style="width:172px;height:172px;"></div></div>
       <p class="qr-note" data-i18n="note">Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.</p>
     </div>
 
@@ -331,7 +331,7 @@ h1.title{
   <div class="footer">TigerHead Battery × GCGS · Since 1928</div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
 /* ============================================================
    配置区 —— 部署前请改成你自己的内容
@@ -495,7 +495,15 @@ async function apiStatus(code){
 
 function drawQR(){
   if(!coupon)return;
-  QRCode.toCanvas(qr,coupon.code,{width:172,margin:1,color:{dark:'#1a0505',light:'#ffffff'}},()=>{});
+  qr.innerHTML='';
+  new QRCode(qr, {
+    text: coupon.code,
+    width: 172,
+    height: 172,
+    colorDark: '#1a0505',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
 }
 
 function setStatus(st){
