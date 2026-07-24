@@ -2,636 +2,564 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>TigerHead Battery — Offre Partenaire</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root {
-    --animal-font: Nunito, 'Noto Sans SC', -apple-system, 'PingFang SC', sans-serif;
-    --animal-primary: #19c8b9;
-    --animal-primary-hover: #3dd4c6;
-    --animal-primary-active: #11a89b;
-    --animal-primary-bg: #e6f9f6;
-    --animal-text: #794f27;
-    --animal-text-body: #725d42;
-    --animal-text-secondary: #9f927d;
-    --animal-text-muted: #8a7b66;
-    --animal-text-disabled: #c4b89e;
-    --animal-bg: #f8f8f0;
-    --animal-bg-content: rgb(247, 243, 223);
-    --animal-border: #c4b89e;
-    --animal-border-hover: #a89878;
-    --animal-radius: 20px;
-    --animal-radius-pill: 50px;
-    --animal-shadow-btn: #bdaea0;
-    --animal-focus-yellow: #ffcc00;
-    --animal-success: #6fba2c;
-    --animal-warning: #f5c31c;
-    --animal-error: #e05a5a;
-    --animal-ease: cubic-bezier(0.4, 0, 0.2, 1);
+/* ============================================================
+   TigerHead 合作伙伴节 · 美化版
+   风格：虎头品牌红黑金 + 促销氛围动效
+   单文件、零依赖，可直接替换 GitHub Pages 的 index.html
+   ============================================================ */
+:root{
+  --red:#d91e18;
+  --red-deep:#8f0f0c;
+  --gold:#ffd76a;
+  --gold-deep:#c98f1b;
+  --bg0:#160405;
+  --bg1:#2b0809;
+  --card:rgba(255,255,255,.055);
+  --card-border:rgba(255,215,106,.20);
+  --text:#fdf6e3;
+  --text-dim:rgba(253,246,227,.62);
+  --green:#4be38a;
+  --fb1:#2f8bff;
+  --fb2:#0e5fce;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body {
-    font-family: var(--animal-font);
-    background: var(--animal-bg);
-    background-image:
-        radial-gradient(circle, rgba(25, 200, 185, 0.10) 1.5px, transparent 1.5px),
-        radial-gradient(circle, rgba(111, 186, 44, 0.06) 1px, transparent 1px);
-    background-size: 28px 28px, 14px 14px;
-    background-position: 0 0, 7px 7px;
-    color: var(--animal-text-body);
-    min-height: 100vh;
-    padding-bottom: 40px;
-}
-.wrap { max-width: 480px; margin: 0 auto; padding: 20px 16px; }
-
-/* ===== Header ===== */
-.header { text-align: center; padding: 28px 0 8px; animation: ac-fade-up 0.5s ease-out; }
-.logo-img {
-    width: 96px;
-    height: 96px;
-    object-fit: contain;
-    border-radius: 24px;
-    background: #fff;
-    padding: 8px;
-    border: 2px solid var(--animal-border);
-    margin-bottom: 12px;
-}
-.brand-pill {
-    display: inline-block;
-    background: var(--animal-primary);
-    color: #fff;
-    font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    padding: 6px 18px;
-    border-radius: var(--animal-radius-pill);
-    box-shadow: 0 3px 0 0 var(--animal-primary-active);
-    margin-bottom: 14px;
-}
-.header h1 {
-    font-size: 26px;
-    font-weight: 900;
-    color: var(--animal-text);
-    letter-spacing: 0.01em;
-    line-height: 1.3;
-}
-.header p {
-    margin-top: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--animal-text-muted);
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(217,30,24,.38), transparent 60%),
+    radial-gradient(80% 50% at 85% 110%, rgba(201,143,27,.22), transparent 60%),
+    linear-gradient(160deg, var(--bg1) 0%, var(--bg0) 55%, #0b0203 100%);
+  background-attachment:fixed;
+  overflow-x:hidden;
 }
 
-/* ===== Lang toggle ===== */
-.lang-toggle {
-    display: inline-flex;
-    gap: 4px;
-    margin-top: 14px;
-    padding: 4px;
-    background: var(--animal-bg-content);
-    border: 2px solid var(--animal-border);
-    border-radius: 999px;
+/* ---------- 背景特效层 ---------- */
+#embers{position:fixed;inset:0;z-index:0;pointer-events:none}              /* 上升的金色火星粒子 */
+#confetti{position:fixed;inset:0;z-index:60;pointer-events:none}            /* 彩带 */
+.bg-stripes{                                                                /* 隐约的斜纹质感 */
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;
+  background:repeating-linear-gradient(115deg,transparent 0 46px,rgba(255,215,106,.9) 46px 48px);
 }
-.lang-toggle button {
-    border: none;
-    background: transparent;
-    border-radius: 999px;
-    padding: 6px 16px;
-    font-family: var(--animal-font);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--animal-text-muted);
-    cursor: pointer;
-    transition: all 0.2s var(--animal-ease);
+.bg-glow{                                                                   /* 顶部呼吸光晕 */
+  position:fixed;left:50%;top:-140px;width:560px;height:380px;z-index:0;pointer-events:none;
+  transform:translateX(-50%);
+  background:radial-gradient(closest-side,rgba(255,180,70,.35),transparent 70%);
+  filter:blur(10px);animation:breathe 6s ease-in-out infinite;
 }
-.lang-toggle button.active {
-    background: #0cc0b5;
-    color: #fff9e3;
+@keyframes breathe{0%,100%{opacity:.7;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.08)}}
+
+/* ---------- 布局 ---------- */
+.wrap{position:relative;z-index:2;max-width:460px;margin:0 auto;padding:34px 20px 56px}
+
+/* ---------- 头部 ---------- */
+.hero{text-align:center;margin-bottom:18px}
+.logo{
+  width:86px;height:89px;object-fit:cover;border-radius:24px;
+  box-shadow:0 0 0 2px rgba(255,215,106,.55),0 0 22px rgba(255,170,50,.28),0 12px 26px rgba(0,0,0,.45);
+  animation:float 4.2s ease-in-out infinite;
+  transform-origin:center;
+}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-9px) rotate(1.2deg)}}
+
+.badge-pill{
+  display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+  padding:6px 16px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.16em;
+  color:var(--gold);border:1px solid rgba(255,215,106,.45);
+  background:linear-gradient(90deg,rgba(217,30,24,.28),rgba(201,143,27,.22));
+  box-shadow:inset 0 0 18px rgba(255,215,106,.12);
+  text-transform:uppercase;
+}
+.badge-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+
+h1.title{
+  margin-top:14px;font-size:clamp(30px,8vw,40px);line-height:1.15;font-weight:900;letter-spacing:.01em;
+  background:linear-gradient(92deg,#9a6312 0%,#ffd76a 22%,#fff6cf 40%,#ffd76a 58%,#9a6312 80%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 4.5s linear infinite;
+  filter:drop-shadow(0 3px 14px rgba(255,190,80,.25));
+}
+@keyframes shimmer{to{background-position:-220% 0}}
+.subtitle{margin-top:10px;color:var(--text-dim);font-size:14.5px;letter-spacing:.04em}
+
+/* ---------- 跑马灯 ---------- */
+.marquee{
+  margin:20px 0 4px;border-radius:12px;overflow:hidden;white-space:nowrap;
+  border:1px solid rgba(255,215,106,.25);
+  background:linear-gradient(90deg,rgba(217,30,24,.30),rgba(201,143,27,.18),rgba(217,30,24,.30));
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.marquee-track{display:inline-block;padding:9px 0;font-size:12.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);animation:marquee 18s linear infinite}
+.marquee-track span{margin:0 18px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ---------- 语言切换 ---------- */
+.lang-toggle{
+  position:relative;display:flex;width:190px;margin:18px auto 6px;padding:4px;
+  border-radius:999px;border:1px solid var(--card-border);background:rgba(0,0,0,.30);
+}
+.lang-toggle .thumb{
+  position:absolute;top:4px;left:4px;width:calc(50% - 4px);height:calc(100% - 8px);
+  border-radius:999px;background:linear-gradient(135deg,var(--red),var(--red-deep));
+  box-shadow:0 0 16px rgba(217,30,24,.55),inset 0 1px 0 rgba(255,255,255,.25);
+  transition:transform .35s cubic-bezier(.65,0,.35,1);
+}
+.lang-toggle.zh .thumb{transform:translateX(100%)}
+.lang-toggle button{
+  position:relative;z-index:1;flex:1;padding:8px 0;border:0;background:none;cursor:pointer;
+  color:var(--text-dim);font-weight:700;font-size:13.5px;transition:color .3s;
+}
+.lang-toggle button.on{color:#fff}
+
+/* ---------- 卡片通用 ---------- */
+.card{
+  position:relative;margin-top:22px;padding:22px 20px;border-radius:22px;
+  background:var(--card);border:1px solid var(--card-border);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 18px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.reveal{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+.step-head{display:flex;align-items:center;gap:12px}
+.step-num{
+  flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  font-weight:900;font-size:15px;color:#2b1400;
+  background:linear-gradient(135deg,#ffe9a8,var(--gold) 45%,var(--gold-deep));
+  box-shadow:0 0 0 3px rgba(255,215,106,.22),0 4px 12px rgba(201,143,27,.45);
+}
+.step-title{font-size:17.5px;font-weight:800}
+.step-desc{margin:12px 0 0 46px;font-size:13.5px;line-height:1.65;color:var(--text-dim)}
+</style>
+<style>
+/* ---------- Facebook 按钮：光泽扫过 + 悬浮发光 ---------- */
+.btn-fb{
+  position:relative;display:flex;align-items:center;justify-content:center;gap:10px;
+  width:calc(100% - 46px);margin:16px 0 0 46px;padding:14px;border:0;border-radius:16px;cursor:pointer;
+  font-size:15px;font-weight:800;color:#fff;letter-spacing:.02em;
+  background:linear-gradient(135deg,var(--fb1),var(--fb2));
+  box-shadow:0 10px 26px rgba(24,119,242,.40),inset 0 1px 0 rgba(255,255,255,.30);
+  overflow:hidden;transition:transform .25s ease,box-shadow .25s ease;
+}
+.btn-fb:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(24,119,242,.55),inset 0 1px 0 rgba(255,255,255,.30)}
+.btn-fb:active{transform:translateY(0) scale(.98)}
+.btn-fb::after{                                  /* 光泽扫过 */
+  content:"";position:absolute;top:0;left:-80%;width:55%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.45),transparent);
+  transform:skewX(-20deg);animation:sweep 3.2s ease-in-out infinite;
+}
+@keyframes sweep{0%,60%{left:-80%}100%{left:130%}}
+.btn-fb .f-icon{width:20px;height:20px;flex:0 0 20px}
+.btn-fb.done{background:linear-gradient(135deg,#27ae60,#1a7f44);box-shadow:0 10px 26px rgba(46,204,113,.35)}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:ripple .6s ease-out forwards;pointer-events:none}
+@keyframes ripple{to{transform:scale(3.2);opacity:0}}
+
+/* ---------- 优惠券票据 ---------- */
+.coupon{
+  border:1.5px solid transparent;border-radius:24px;
+  background:
+    linear-gradient(165deg,rgba(60,16,10,.92),rgba(28,7,6,.94)) padding-box,
+    linear-gradient(135deg,rgba(255,215,106,.85),rgba(217,30,24,.55) 45%,rgba(255,215,106,.85)) border-box;
+  transition:transform .35s ease,box-shadow .35s ease;
+}
+.coupon.unlocked{box-shadow:0 0 0 1px rgba(255,215,106,.25),0 22px 60px rgba(217,30,24,.30),0 0 70px rgba(255,180,60,.14)}
+.coupon-top{display:flex;align-items:center;justify-content:space-between}
+.coupon-label{font-size:19px;font-weight:900;letter-spacing:.03em;
+  background:linear-gradient(92deg,#ffe9a8,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.badge-active{
+  display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;
+  font-size:12px;font-weight:800;color:var(--green);
+  background:rgba(46,204,113,.12);border:1px solid rgba(75,227,138,.40);
+}
+.badge-active .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.4s infinite}
+.coupon-sub{margin-top:8px;font-size:13px;color:var(--text-dim);line-height:1.6}
+
+.ticket-cut{                                        /* 票据撕线 + 两侧缺口 */
+  position:relative;margin:18px -20px;border-top:2px dashed rgba(255,215,106,.35);
+}
+.ticket-cut::before,.ticket-cut::after{
+  content:"";position:absolute;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:#1c0706;border:1.5px solid rgba(255,215,106,.5);
+}
+.ticket-cut::before{left:-31px}
+.ticket-cut::after{right:-31px}
+
+.qr-zone{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:16px}
+.qr-frame{
+  position:relative;padding:14px;border-radius:20px;background:#fff;
+  box-shadow:0 0 0 4px rgba(255,215,106,.30),0 0 46px rgba(255,190,80,.35),0 16px 34px rgba(0,0,0,.45);
+}
+.qr-frame::before{                                   /* 四角金色扫描框 */
+  content:"";position:absolute;inset:-9px;border-radius:26px;pointer-events:none;
+  background:
+    linear-gradient(var(--gold),var(--gold)) left top/26px 3px,
+    linear-gradient(var(--gold),var(--gold)) left top/3px 26px,
+    linear-gradient(var(--gold),var(--gold)) right top/26px 3px,
+    linear-gradient(var(--gold),var(--gold)) right top/3px 26px,
+    linear-gradient(var(--gold),var(--gold)) left bottom/26px 3px,
+    linear-gradient(var(--gold),var(--gold)) left bottom/3px 26px,
+    linear-gradient(var(--gold),var(--gold)) right bottom/26px 3px,
+    linear-gradient(var(--gold),var(--gold)) right bottom/3px 26px;
+  background-repeat:no-repeat;
+  animation:cornerPulse 2.4s ease-in-out infinite;
+}
+@keyframes cornerPulse{0%,100%{opacity:.65}50%{opacity:1}}
+#qr{display:block;width:172px;height:172px;transition:opacity .35s,transform .35s}
+#qr.refreshing{opacity:0;transform:rotateY(90deg)}
+
+.countdown{display:flex;align-items:center;gap:12px}
+.ring{transform:rotate(-90deg)}
+.ring .bg{stroke:rgba(255,255,255,.12)}
+.ring .fg{stroke:var(--gold);stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,215,106,.8));transition:stroke-dashoffset .3s linear}
+.count-num{font-size:22px;font-weight:900;color:var(--gold);min-width:58px;text-align:center;font-variant-numeric:tabular-nums}
+.count-txt{font-size:12.5px;color:var(--text-dim);line-height:1.5;max-width:170px}
+.qr-note{font-size:12.5px;color:var(--text-dim);text-align:center;line-height:1.7}
+
+/* 锁定遮罩 */
+.lock-veil{
+  position:absolute;inset:0;z-index:5;border-radius:24px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px;
+  background:rgba(14,4,4,.62);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+  transition:opacity .5s ease;
+}
+.lock-veil.hide{opacity:0;pointer-events:none}
+.lock-veil .lock{font-size:34px;filter:drop-shadow(0 0 14px rgba(255,215,106,.6));animation:float 3s ease-in-out infinite}
+.lock-veil p{font-size:13.5px;color:var(--text);font-weight:600;line-height:1.6}
+
+/* ---------- 使用条款 ---------- */
+.terms-title{font-size:15.5px;font-weight:800;display:flex;align-items:center;gap:9px}
+.terms-title::before{content:"";width:4px;height:17px;border-radius:2px;background:linear-gradient(var(--gold),var(--red))}
+.terms{list-style:none;margin-top:13px}
+.terms li{
+  display:flex;gap:11px;align-items:flex-start;padding:9px 0;font-size:13.5px;color:var(--text-dim);line-height:1.6;
+  border-bottom:1px dashed rgba(255,255,255,.08);
+}
+.terms li:last-child{border-bottom:0}
+.check{
+  flex:0 0 19px;height:19px;margin-top:1px;border-radius:50%;display:grid;place-items:center;
+  font-size:11px;font-weight:900;color:#2b1400;
+  background:linear-gradient(135deg,#ffe9a8,var(--gold-deep));
+  box-shadow:0 2px 8px rgba(201,143,27,.4);
 }
 
-/* ===== Card ===== */
-.card {
-    background: var(--animal-bg-content);
-    border: 2px solid var(--animal-border);
-    border-radius: var(--animal-radius);
-    padding: 20px 22px;
-    margin-top: 16px;
-    animation: ac-fade-up 0.5s ease-out;
-}
-.card-dashed {
-    border: 2px dashed #e8dcc8;
-    background: rgb(250, 248, 242);
-}
-.step-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px; height: 28px;
-    background: var(--animal-primary);
-    color: #fff;
-    border-radius: 50%;
-    font-size: 15px; font-weight: 800;
-    box-shadow: 0 2px 4px rgba(25, 200, 185, 0.3);
-    margin-right: 10px;
-}
-.card h2 {
-    display: flex; align-items: center;
-    font-size: 17px; font-weight: 700;
-    color: var(--animal-text);
-    margin-bottom: 8px;
-}
-.card p.desc {
-    font-size: 13px; font-weight: 500;
-    color: var(--animal-text-muted);
-    line-height: 1.6;
-    margin-bottom: 14px;
-}
+.footer{margin-top:30px;text-align:center;font-size:11.5px;color:rgba(253,246,227,.35);letter-spacing:.06em}
 
-/* ===== Buttons ===== */
-.btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    height: 48px;
-    border: none;
-    border-radius: var(--animal-radius-pill);
-    font-family: var(--animal-font);
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    transition: all 0.2s var(--animal-ease);
-    user-select: none;
-}
-.btn:focus-visible { outline: 2px solid var(--animal-primary); outline-offset: 2px; }
-.btn-primary {
-    background: #f8f8f0;
-    color: var(--animal-text);
-    border: 2px solid var(--animal-border);
-    box-shadow: 0 5px 0 0 var(--animal-shadow-btn);
-}
-.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 0 0 var(--animal-shadow-btn); border-color: var(--animal-border-hover); }
-.btn-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 0 var(--animal-shadow-btn); }
-.btn-primary:disabled { opacity: 0.5; transform: none; cursor: not-allowed; }
-.btn-mint {
-    background: var(--animal-primary);
-    color: #fff;
-    box-shadow: 0 5px 0 0 var(--animal-primary-active);
-}
-.btn-mint:hover { background: var(--animal-primary-hover); transform: translateY(-1px); box-shadow: 0 6px 0 0 var(--animal-primary-active); }
-.btn-mint:active { transform: translateY(2px); box-shadow: 0 1px 0 0 var(--animal-primary-active); }
-.btn-fb {
-    background: #889df0;
-    color: #fff;
-    box-shadow: 0 5px 0 0 #6b7fd0;
-}
-.btn-fb:hover { transform: translateY(-1px); box-shadow: 0 6px 0 0 #6b7fd0; }
-.btn-fb:active { transform: translateY(2px); box-shadow: 0 1px 0 0 #6b7fd0; }
-.btn.loading {
-    background: #0ec4b6;
-    color: #fff;
-    border: none;
-    background-image: repeating-linear-gradient(-45deg, #0ec4b6 0 10px, #01b0a7 10px 20px);
-    background-size: 28.28px 28.28px;
-    animation: stripe 1s linear infinite;
-    pointer-events: none;
-}
-@keyframes stripe { to { background-position: -28.28px 0; } }
+/* 语言切换淡入 */
+.fade-swap{transition:opacity .18s ease}
+.fade-swap.out{opacity:0}
 
-/* ===== Coupon card ===== */
-.coupon {
-    background: #fff;
-    border: 2.5px solid var(--animal-primary);
-    border-radius: var(--animal-radius);
-    overflow: hidden;
-    margin-top: 16px;
-    animation: ac-fade-up 0.4s ease-out;
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
 }
-.coupon-top {
-    background: var(--animal-primary-bg);
-    padding: 16px 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px dashed var(--animal-border);
-}
-.coupon-offer { font-size: 20px; font-weight: 900; color: var(--animal-text); }
-.tag {
-    display: inline-block;
-    padding: 4px 14px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    background: var(--animal-success);
-    color: #fff;
-}
-.tag.used { background: var(--animal-text-disabled); }
-.tag.expired { background: var(--animal-error); }
-.coupon-body { padding: 20px 22px; text-align: center; }
-.qr-box {
-    display: inline-block;
-    background: #fff;
-    padding: 12px;
-    border-radius: 16px;
-    border: 2px solid var(--animal-border);
-}
-.coupon-code {
-    margin-top: 12px;
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    color: var(--animal-text);
-    font-variant-numeric: tabular-nums;
-}
-.refresh-bar {
-    margin-top: 14px;
-    height: 12px;
-    border-radius: 999px;
-    background: var(--animal-bg);
-    border: 1.5px solid #e8dcc8;
-    box-shadow: inset 0 2px 4px rgba(114, 93, 66, 0.08);
-    overflow: hidden;
-    position: relative;
-}
-.refresh-fill {
-    height: 100%;
-    border-radius: 999px;
-    background: #0ec4b6;
-    background-image: repeating-linear-gradient(-45deg, #0ec4b6 0 10px, #01b0a7 10px 20px);
-    background-size: 28.28px 28.28px;
-    animation: stripe 1s linear infinite;
-    transition: width 1s linear;
-}
-.refresh-text {
-    margin-top: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--animal-text-secondary);
-}
-.coupon-note {
-    margin-top: 14px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--animal-text-muted);
-    line-height: 1.6;
-}
-
-/* ===== Rules ===== */
-.rules li {
-    list-style: none;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--animal-text-muted);
-    line-height: 1.8;
-    padding-left: 20px;
-    position: relative;
-}
-.rules li::before {
-    content: '';
-    position: absolute;
-    left: 4px; top: 10px;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--animal-primary);
-}
-
-/* ===== Notification ===== */
-.notif {
-    position: fixed;
-    top: 20px; left: 50%;
-    transform: translateX(-50%) translateY(-16px);
-    opacity: 0;
-    background: var(--animal-bg-content);
-    border: 2px solid var(--animal-border);
-    border-radius: 18px;
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--animal-text-body);
-    box-shadow: 0 6px 18px rgba(61, 52, 40, 0.14);
-    transition: all 0.25s var(--animal-ease);
-    z-index: 2000;
-    pointer-events: none;
-    max-width: calc(100vw - 48px);
-}
-.notif.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-.notif.success { border-color: var(--animal-success); }
-.notif.error { border-color: var(--animal-error); }
-
-@keyframes ac-fade-up {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.hidden { display: none !important; }
 </style>
 </head>
 <body>
 
+<canvas id="embers"></canvas>
+<div class="bg-stripes"></div>
+<div class="bg-glow"></div>
+<canvas id="confetti"></canvas>
+
 <div class="wrap">
-    <div class="header">
-        <img src="logo.png" alt="TigerHead" class="logo-img">
-        <h1 data-i18n="heroTitle">Fête des Partenaires<br>Algérie</h1>
-        <p data-i18n="heroSub">Scannez. Recevez. Économisez en magasin.</p>
-        <div class="lang-toggle">
-            <button id="langFr" class="active">Français</button>
-            <button id="langZh">中文</button>
+
+  <!-- 头部 -->
+  <header class="hero">
+    <img class="logo" src="logo.png" alt="TigerHead × GCGS">
+    <div class="badge-pill"><span class="dot"></span><span data-i18n="badge">Offre Spéciale</span></div>
+    <h1 class="title" data-i18n="title">Fête des Partenaires<br>Algérie</h1>
+    <p class="subtitle" data-i18n="subtitle">Scannez. Recevez. Économisez en magasin.</p>
+  </header>
+
+  <!-- 跑马灯 -->
+  <div class="marquee"><div class="marquee-track" id="marqueeTrack"></div></div>
+
+  <!-- 语言切换 -->
+  <div class="lang-toggle" id="langToggle">
+    <div class="thumb"></div>
+    <button class="on" data-lang="fr">Français</button>
+    <button data-lang="zh">中文</button>
+  </div>
+
+  <!-- 步骤 1：关注 Facebook -->
+  <section class="card reveal">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div class="step-title" data-i18n="s1t">Suivez-nous sur Facebook</div>
+    </div>
+    <p class="step-desc" data-i18n="s1d">Suivez la page officielle TigerHead pour rester informé des promotions.</p>
+    <button class="btn-fb" id="fbBtn">
+      <svg class="f-icon" viewBox="0 0 24 24" fill="#fff"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>
+      <span data-i18n="s1b">Suivre sur Facebook</span>
+    </button>
+  </section>
+
+  <!-- 步骤 2：优惠券 -->
+  <section class="card coupon reveal" id="couponCard">
+    <div class="coupon-top">
+      <div class="coupon-label" data-i18n="s2t">Recevez votre coupon</div>
+      <div class="badge-active"><span class="dot"></span><span data-i18n="active">Actif</span></div>
+    </div>
+    <p class="coupon-sub" data-i18n="s2d">Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.</p>
+
+    <div class="ticket-cut"></div>
+
+    <div class="qr-zone">
+      <div class="qr-frame"><canvas id="qr" width="172" height="172"></canvas></div>
+      <div class="countdown">
+        <svg class="ring" width="46" height="46" viewBox="0 0 46 46">
+          <circle class="bg" cx="23" cy="23" r="19" fill="none" stroke-width="4"/>
+          <circle class="fg" id="ringFg" cx="23" cy="23" r="19" fill="none" stroke-width="4"
+                  stroke-dasharray="119.4" stroke-dashoffset="0"/>
+        </svg>
+        <div>
+          <div class="count-num" id="countNum">30s</div>
+          <div class="count-txt" data-i18n="renew">Le code QR se renouvelle automatiquement</div>
         </div>
+      </div>
+      <p class="qr-note" data-i18n="note">Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.</p>
     </div>
 
-    <!-- Step 1: FB follow -->
-    <div class="card" id="fbCard">
-        <h2><span class="step-num">1</span><span data-i18n="fbTitle">Suivez-nous sur Facebook</span></h2>
-        <p class="desc" data-i18n="fbDesc">Suivez la page officielle TigerHead pour rester informé des promotions.</p>
-        <button class="btn btn-fb" id="fbBtn" data-i18n="fbBtn">Suivre sur Facebook</button>
+    <!-- 锁定遮罩：关注后解锁 -->
+    <div class="lock-veil" id="lockVeil">
+      <div class="lock">🔒</div>
+      <p data-i18n="locked">Suivez la page Facebook<br>pour débloquer votre coupon</p>
     </div>
+  </section>
 
-    <!-- Step 2: claim (FB 跳转后才出现) -->
-    <div class="card hidden" id="claimCard">
-        <h2><span class="step-num">2</span><span data-i18n="claimTitle">Recevez votre coupon</span></h2>
-        <p class="desc" id="offerDesc" data-i18n="claimDesc">Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.</p>
-        <button class="btn btn-primary" id="claimBtn" data-i18n="claimBtn">Recevoir mon coupon</button>
-    </div>
+  <!-- 使用条款 -->
+  <section class="card reveal">
+    <div class="terms-title" data-i18n="termsT">Conditions d'utilisation</div>
+    <ul class="terms">
+      <li><span class="check">✓</span><span data-i18n="t1">Un coupon par appareil.</span></li>
+      <li><span class="check">✓</span><span data-i18n="t2">Un coupon par achat en magasin partenaire.</span></li>
+      <li><span class="check">✓</span><span data-i18n="t3">Valable jusqu'à la fin de la campagne.</span></li>
+      <li><span class="check">✓</span><span data-i18n="t4">Le vendeur scanne le code pour valider la remise.</span></li>
+    </ul>
+  </section>
 
-    <!-- Coupon display -->
-    <div class="coupon hidden" id="couponCard">
-        <div class="coupon-top">
-            <span class="coupon-offer" id="offerText">Coupon</span>
-            <span class="tag" id="couponStatus">Actif</span>
-        </div>
-        <div class="coupon-body">
-            <div class="qr-box"><div id="qrcode"></div></div>
-            <div class="coupon-code" id="couponCode">—</div>
-            <div class="refresh-bar"><div class="refresh-fill" id="refreshFill" style="width:100%"></div></div>
-            <div class="refresh-text" id="refreshText"><span data-i18n="refreshPre">Le code QR se renouvelle dans</span> <span id="countdown">30</span> <span data-i18n="refreshUnit">s</span></div>
-            <div class="coupon-note" data-i18n="couponNote">Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.</div>
-        </div>
-    </div>
-
-    <!-- Rules -->
-    <div class="card card-dashed" style="margin-top:20px">
-        <h2 style="font-size:15px" data-i18n="rulesTitle">Conditions d'utilisation</h2>
-        <ul class="rules">
-            <li data-i18n="rule1">Un coupon par appareil.</li>
-            <li data-i18n="rule2">Un coupon par achat en magasin partenaire.</li>
-            <li data-i18n="rule3">Valable jusqu'à la fin de la campagne.</li>
-            <li data-i18n="rule4">Le vendeur scanne le code pour valider la remise.</li>
-        </ul>
-    </div>
+  <div class="footer">TigerHead Battery × GCGS · Since 1928</div>
 </div>
 
-<div class="notif" id="notif"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
-(function () {
-    'use strict';
+/* ============================================================
+   配置区 —— 部署前请改成你自己的内容
+   ============================================================ */
+const FB_URL = 'https://www.facebook.com/tigerheadbattery'; // ← 替换为你的 Facebook 主页链接
+const QR_INTERVAL = 30;                                      // 二维码刷新间隔（秒）
 
-    var FB_PAGE_URL = 'https://www.facebook.com/TigerHeadBattery';
-    var API_BASE = ''; // 同域部署; 后端就绪后填 /api
-    var LS_KEY = 'th_coupon_v1';
-    var QR_WINDOW = 30; // seconds
+/* ============================================================
+   双语
+   ============================================================ */
+const I18N = {
+  fr:{
+    badge:'Offre Spéciale',
+    title:'Fête des Partenaires<br>Algérie',
+    subtitle:'Scannez. Recevez. Économisez en magasin.',
+    marquee:['★ OFFRE PARTENAIRE','BATTERIES ALCALINES','★ ÉCONOMISEZ EN MAGASIN','TIGERHEAD × GCGS'],
+    s1t:'Suivez-nous sur Facebook',
+    s1d:'Suivez la page officielle TigerHead pour rester informé des promotions.',
+    s1b:'Suivre sur Facebook',
+    s1done:'✓ Page suivie',
+    s2t:'Recevez votre coupon',
+    s2d:'Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.',
+    active:'Actif',
+    renew:'Le code QR se renouvelle automatiquement',
+    note:'Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.',
+    locked:'Suivez la page Facebook<br>pour débloquer votre coupon',
+    termsT:"Conditions d'utilisation",
+    t1:'Un coupon par appareil.',
+    t2:'Un coupon par achat en magasin partenaire.',
+    t3:"Valable jusqu'à la fin de la campagne.",
+    t4:'Le vendeur scanne le code pour valider la remise.'
+  },
+  zh:{
+    badge:'限时特惠',
+    title:'合作伙伴节<br>阿尔及利亚',
+    subtitle:'扫码 · 领取 · 门店立省',
+    marquee:['★ 合作伙伴专享','碱性电池折扣券','★ 门店立省','虎头电池 × 广州轻工'],
+    s1t:'关注我们的 Facebook',
+    s1d:'关注 TigerHead 官方主页，第一时间获取促销信息。',
+    s1b:'关注 Facebook',
+    s1done:'✓ 已关注',
+    s2t:'领取你的优惠券',
+    s2d:'碱性电池折扣券，每台设备限领一张。',
+    active:'生效中',
+    renew:'二维码将自动刷新',
+    note:'结账时向店员出示此码。<br>每次消费限用一张。',
+    locked:'关注 Facebook 后<br>即可解锁你的优惠券',
+    termsT:'使用条款',
+    t1:'每台设备限领一张。',
+    t2:'每合作门店每次消费限用一张。',
+    t3:'活动结束前有效。',
+    t4:'店员扫码核销后立即享受折扣。'
+  }
+};
+let lang='fr';
+const toggle=document.getElementById('langToggle');
+function applyLang(l){
+  lang=l;
+  document.documentElement.lang=l==='zh'?'zh-CN':'fr';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.dataset.i18n;
+    const v=(typeof unlocked!=='undefined'&&unlocked&&key==='s1b')?I18N[l].s1done:I18N[l][key];
+    if(v==null)return;
+    el.classList.add('out');
+    setTimeout(()=>{el.innerHTML=v;el.classList.remove('out')},180);
+    el.classList.add('fade-swap');
+  });
+  toggle.classList.toggle('zh',l==='zh');
+  toggle.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.lang===l));
+  buildMarquee();
+}
+toggle.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
 
-    // ---------- i18n ----------
-    var STR = {
-        fr: {
-            heroTitle: 'Fête des Partenaires<br>Algérie',
-            heroSub: 'Scannez. Recevez. Économisez en magasin.',
-            fbTitle: 'Suivez-nous sur Facebook',
-            fbDesc: 'Suivez la page officielle TigerHead pour rester informé des promotions.',
-            fbBtn: 'Suivre sur Facebook',
-            claimTitle: 'Recevez votre coupon',
-            claimDesc: 'Coupon de réduction sur les batteries alcalines. Un seul coupon par appareil.',
-            claimBtn: 'Recevoir mon coupon',
-            loading: 'Chargement...',
-            refreshPre: 'Le code QR se renouvelle dans',
-            refreshUnit: 's',
-            couponNote: 'Présentez ce code au vendeur en magasin.<br>Un seul coupon par achat.',
-            rulesTitle: "Conditions d'utilisation",
-            rule1: 'Un coupon par appareil.',
-            rule2: 'Un coupon par achat en magasin partenaire.',
-            rule3: "Valable jusqu'à la fin de la campagne.",
-            rule4: 'Le vendeur scanne le code pour valider la remise.',
-            stActive: 'Actif', stUsed: 'Utilisé', stExpired: 'Expiré',
-            noteUsed: 'Coupon déjà utilisé', noteExpired: 'Coupon expiré',
-            msgAlready: 'Vous avez déjà un coupon',
-            msgSuccess: 'Coupon reçu !',
-            msgError: 'Erreur réseau, réessayez'
-        },
-        zh: {
-            heroTitle: '阿尔及利亚伙伴节',
-            heroSub: '扫码 · 领券 · 到店省钱',
-            fbTitle: '关注我们的 Facebook 主页',
-            fbDesc: '关注虎头官方主页，第一时间获取优惠信息。',
-            fbBtn: '关注 Facebook 主页',
-            claimTitle: '领取你的优惠券',
-            claimDesc: '碱性电池优惠券，每台设备限领一张。',
-            claimBtn: '领取我的优惠券',
-            loading: '领取中...',
-            refreshPre: '二维码',
-            refreshUnit: '秒后刷新',
-            couponNote: '到店出示此码给店员扫码确认。<br>一笔消费限用一张券。',
-            rulesTitle: '使用规则',
-            rule1: '每台设备限领一张券。',
-            rule2: '合作门店内每笔消费限用一张。',
-            rule3: '活动期间内有效。',
-            rule4: '店员扫码确认后优惠生效。',
-            stActive: '有效', stUsed: '已使用', stExpired: '已过期',
-            noteUsed: '此券已使用', noteExpired: '此券已过期',
-            msgAlready: '你已领取过优惠券',
-            msgSuccess: '领取成功！',
-            msgError: '网络错误，请重试'
-        }
-    };
-    var lang = localStorage.getItem('th_lang') || 'fr';
-    function t(k) { return STR[lang][k] || STR.fr[k] || k; }
-    function applyLang() {
-        var dict = STR[lang];
-        document.querySelectorAll('[data-i18n]').forEach(function (el) {
-            var k = el.getAttribute('data-i18n');
-            if (dict[k] !== undefined) el.innerHTML = dict[k];
-        });
-        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'fr';
-        document.getElementById('langFr').classList.toggle('active', lang === 'fr');
-        document.getElementById('langZh').classList.toggle('active', lang === 'zh');
-        localStorage.setItem('th_lang', lang);
-        var c = loadLocal();
-        if (c && c.status) setStatus(c.status);
-    }
-    document.getElementById('langFr').addEventListener('click', function () { lang = 'fr'; applyLang(); });
-    document.getElementById('langZh').addEventListener('click', function () { lang = 'zh'; applyLang(); });
+/* 跑马灯（内容复制一份实现无缝滚动） */
+function buildMarquee(){
+  const t=document.getElementById('marqueeTrack');
+  const items=I18N[lang].marquee.map(s=>`<span>${s}</span>`).join('');
+  t.innerHTML=items+items;
+}
+buildMarquee();
 
-    // ---------- 设备指纹（简化版） ----------
-    function fingerprint() {
-        var raw = [
-            navigator.userAgent,
-            navigator.language,
-            screen.width + 'x' + screen.height,
-            screen.colorDepth,
-            new Date().getTimezoneOffset(),
-            navigator.hardwareConcurrency || '',
-            navigator.deviceMemory || ''
-        ].join('|');
-        var h = 0;
-        for (var i = 0; i < raw.length; i++) {
-            h = ((h << 5) - h + raw.charCodeAt(i)) | 0;
-        }
-        return 'fp_' + Math.abs(h).toString(36);
-    }
-
-    // ---------- 工具 ----------
-    var notifTimer = null;
-    function notify(msg, type) {
-        var el = document.getElementById('notif');
-        el.textContent = msg;
-        el.className = 'notif show ' + (type || '');
-        clearTimeout(notifTimer);
-        notifTimer = setTimeout(function () { el.className = 'notif'; }, 2600);
-    }
-
-    function loadLocal() {
-        try { return JSON.parse(localStorage.getItem(LS_KEY) || 'null'); }
-        catch (e) { return null; }
-    }
-    function saveLocal(c) { localStorage.setItem(LS_KEY, JSON.stringify(c)); }
-
-    // ---------- API（带本地 mock 回退，后端未就绪也能演示） ----------
-    function apiClaim(fp) {
-        if (!API_BASE) {
-            return new Promise(function (resolve) {
-                setTimeout(function () {
-                    var seg = function () { return Math.random().toString(36).slice(2, 6).toUpperCase(); };
-                    resolve({ code: 'TH-' + seg() + '-' + seg(), offer: '-10% Batteries Alcalines', status: 'active' });
-                }, 700);
-            });
-        }
-        return fetch(API_BASE + '/claim', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fingerprint: fp })
-        }).then(function (r) { return r.json(); });
-    }
-
-    function apiStatus(code) {
-        if (!API_BASE) return Promise.resolve(null);
-        return fetch(API_BASE + '/coupon/status?code=' + encodeURIComponent(code))
-            .then(function (r) { return r.json(); })
-            .catch(function () { return null; });
-    }
-
-    // ---------- QR 动态刷新 ----------
-    var qrObj = null, qrTimer = null, cdTimer = null, remain = QR_WINDOW;
-    function qrPayload(coupon) {
-        // 内容 = code + 时间窗（后端用 HMAC(时间窗) 校验）
-        return coupon.code + '|' + Math.floor(Date.now() / (QR_WINDOW * 1000));
-    }
-    function renderQR(coupon) {
-        var el = document.getElementById('qrcode');
-        el.innerHTML = '';
-        qrObj = new QRCode(el, {
-            text: qrPayload(coupon),
-            width: 200, height: 200,
-            correctLevel: QRCode.CorrectLevel.M
-        });
-    }
-    function startQrCycle(coupon) {
-        clearInterval(qrTimer); clearInterval(cdTimer);
-        remain = QR_WINDOW;
-        renderQR(coupon);
-        document.getElementById('countdown').textContent = remain;
-        document.getElementById('refreshFill').style.width = '100%';
-        cdTimer = setInterval(function () {
-            remain--;
-            if (remain <= 0) {
-                remain = QR_WINDOW;
-                renderQR(coupon);
-            }
-            document.getElementById('countdown').textContent = remain;
-            document.getElementById('refreshFill').style.width = (remain / QR_WINDOW * 100) + '%';
-        }, 1000);
-    }
-
-    // ---------- 状态展示 ----------
-    function showCoupon(coupon) {
-        document.getElementById('claimCard').classList.add('hidden');
-        document.getElementById('couponCard').classList.remove('hidden');
-        document.getElementById('offerText').textContent = coupon.offer || 'Coupon';
-        document.getElementById('couponCode').textContent = coupon.code;
-        setStatus(coupon.status || 'active');
-        if ((coupon.status || 'active') === 'active') startQrCycle(coupon);
-    }
-    function setStatus(st) {
-        var el = document.getElementById('couponStatus');
-        el.className = 'tag' + (st === 'redeemed' ? ' used' : st === 'expired' ? ' expired' : '');
-        el.textContent = st === 'redeemed' ? t('stUsed') : st === 'expired' ? t('stExpired') : t('stActive');
-        if (st !== 'active') {
-            clearInterval(cdTimer);
-            document.getElementById('refreshFill').style.width = '0%';
-            document.getElementById('refreshText').textContent = st === 'redeemed' ? t('noteUsed') : t('noteExpired');
-        }
-    }
-
-    // ---------- 初始化 ----------
-    var fp = fingerprint();
-    var existing = loadLocal();
-    if (localStorage.getItem('th_fb_clicked') === '1' && !existing) {
-        document.getElementById('claimCard').classList.remove('hidden');
-    }
-    if (existing && existing.code) {
-        showCoupon(existing);
-        apiStatus(existing.code).then(function (s) {
-            if (s && s.status && s.status !== existing.status) {
-                existing.status = s.status;
-                saveLocal(existing);
-                setStatus(s.status);
-            }
-        });
-    }
-
-    document.getElementById('fbBtn').addEventListener('click', function () {
-        window.open(FB_PAGE_URL, '_blank');
-        localStorage.setItem('th_fb_clicked', '1');
-        document.getElementById('claimCard').classList.remove('hidden');
-        document.getElementById('claimCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-
-    document.getElementById('claimBtn').addEventListener('click', function () {
-        var btn = this;
-        if (loadLocal()) { notify(t('msgAlready'), 'error'); return; }
-        btn.classList.add('loading');
-        btn.textContent = t('loading');
-        apiClaim(fp).then(function (coupon) {
-            coupon.fingerprint = fp;
-            saveLocal(coupon);
-            showCoupon(coupon);
-            notify(t('msgSuccess'), 'success');
-        }).catch(function () {
-            btn.classList.remove('loading');
-            btn.textContent = t('claimBtn');
-            notify(t('msgError'), 'error');
-        });
-    });
-
-    // 状态轮询（30s）：核销后消费者端同步显示"已使用"
-    setInterval(function () {
-        var c = loadLocal();
-        if (!c || c.status !== 'active') return;
-        apiStatus(c.code).then(function (s) {
-            if (s && s.status && s.status !== c.status) {
-                c.status = s.status;
-                saveLocal(c);
-                setStatus(s.status);
-            }
-        });
-    }, 30000);
-
-    // 应用语言（默认法语，记住用户选择）
-    applyLang();
+/* ============================================================
+   背景：上升的金色火星粒子
+   ============================================================ */
+const ec=document.getElementById('embers'),ex=ec.getContext('2d');
+let EW,EH,parts=[];
+function eResize(){EW=ec.width=innerWidth;EH=ec.height=innerHeight}
+eResize();addEventListener('resize',eResize);
+function spawn(){return{x:Math.random()*EW,y:EH+10,r:Math.random()*2.2+.7,
+  vy:-(Math.random()*.7+.35),vx:(Math.random()-.5)*.35,
+  a:Math.random()*.55+.15,hue:Math.random()<.75?45:8,life:Math.random()*300+200}}
+for(let i=0;i<46;i++){const p=spawn();p.y=Math.random()*EH;parts.push(p)}
+(function emberLoop(){
+  ex.clearRect(0,0,EW,EH);
+  ex.globalCompositeOperation='lighter';
+  parts.forEach((p,i)=>{
+    p.x+=p.vx+Math.sin((p.y+p.life)*.01)*.25;p.y+=p.vy;p.life--;
+    if(p.y<-12||p.life<0)parts[i]=spawn();
+    const tw=.6+.4*Math.sin(p.life*.08);
+    ex.beginPath();ex.arc(p.x,p.y,p.r,0,7);
+    ex.fillStyle=`hsla(${p.hue},95%,62%,${p.a*tw})`;
+    ex.shadowColor=`hsla(${p.hue},95%,60%,.9)`;ex.shadowBlur=8;ex.fill();
+  });
+  requestAnimationFrame(emberLoop);
 })();
+
+/* ============================================================
+   彩带（自实现，零依赖）
+   ============================================================ */
+const cc=document.getElementById('confetti'),cx=cc.getContext('2d');
+let confs=[],confRun=false;
+function cResize(){cc.width=innerWidth;cc.height=innerHeight}
+cResize();addEventListener('resize',cResize);
+function burst(x,y,n=130){
+  const colors=['#ffd76a','#d91e18','#fff6cf','#ff9d2e','#ffffff'];
+  for(let i=0;i<n;i++){
+    const a=Math.random()*Math.PI*2,v=Math.random()*9+3;
+    confs.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-4,
+      w:Math.random()*8+4,h:Math.random()*5+3,rot:Math.random()*360,
+      vr:(Math.random()-.5)*22,c:colors[i%colors.length],life:Math.random()*50+70});
+  }
+  if(!confRun){confRun=true;confLoop()}
+}
+function confLoop(){
+  cx.clearRect(0,0,cc.width,cc.height);
+  confs=confs.filter(p=>p.life>0&&p.y<cc.height+30);
+  confs.forEach(p=>{
+    p.vy+=.22;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.life--;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot*Math.PI/180);
+    cx.globalAlpha=Math.min(1,p.life/40);
+    cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore();
+  });
+  if(confs.length)requestAnimationFrame(confLoop);else confRun=false;
+}
+
+/* ============================================================
+   二维码 + 30 秒倒计时环
+   【替换点】这里画的是演示用图案码。接入你自己的生成逻辑：
+   例如 qrcode.js / qrious，把 drawQR() 内部换成真实 payload 即可。
+   ============================================================ */
+const qr=document.getElementById('qr'),qx=qr.getContext('2d');
+const N=25,CELL=qr.width/N;
+function drawQR(){
+  qx.fillStyle='#fff';qx.fillRect(0,0,qr.width,qr.height);
+  qx.fillStyle='#1a0505';
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+    if(inFinder(r,c))continue;
+    if(Math.random()<.42)qx.fillRect(c*CELL,r*CELL,CELL,CELL);
+  }
+  finder(0,0);finder(N-7,0);finder(0,N-7);
+}
+function inFinder(r,c){return(r<8&&c<8)||(r<8&&c>=N-8)||(r>=N-8&&c<8)}
+function finder(c0,r0){
+  qx.fillStyle='#1a0505';qx.fillRect(c0*CELL,r0*CELL,7*CELL,7*CELL);
+  qx.fillStyle='#fff';qx.fillRect((c0+1)*CELL,(r0+1)*CELL,5*CELL,5*CELL);
+  qx.fillStyle='#1a0505';qx.fillRect((c0+2)*CELL,(r0+2)*CELL,3*CELL,3*CELL);
+}
+drawQR();
+
+const ring=document.getElementById('ringFg'),num=document.getElementById('countNum');
+const CIRC=119.4;let left=QR_INTERVAL,timer=null;
+function tick(){
+  left--;
+  if(left<=0){
+    qr.classList.add('refreshing');
+    setTimeout(()=>{drawQR();qr.classList.remove('refreshing')},360);
+    left=QR_INTERVAL;
+  }
+  num.textContent=left+'s';
+  ring.style.strokeDashoffset=CIRC*(1-left/QR_INTERVAL);
+}
+function startCountdown(){if(timer)return;num.textContent=left+'s';timer=setInterval(tick,1000)}
+
+/* ============================================================
+   流程：关注 Facebook → 解锁优惠券 + 彩带
+   ============================================================ */
+const fbBtn=document.getElementById('fbBtn'),
+      veil=document.getElementById('lockVeil'),
+      couponCard=document.getElementById('couponCard');
+let unlocked=false;
+fbBtn.addEventListener('click',e=>{
+  /* 点击涟漪 */
+  const r=fbBtn.getBoundingClientRect(),rip=document.createElement('span');
+  rip.className='ripple';const d=Math.max(r.width,r.height);
+  rip.style.cssText+=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;
+  fbBtn.appendChild(rip);setTimeout(()=>rip.remove(),650);
+
+  window.open(FB_URL,'_blank');
+  if(unlocked)return;unlocked=true;
+
+  setTimeout(()=>{
+    veil.classList.add('hide');
+    couponCard.classList.add('unlocked');
+    fbBtn.classList.add('done');
+    fbBtn.querySelector('[data-i18n]').textContent=I18N[lang].s1done;
+    startCountdown();
+    const cr=couponCard.getBoundingClientRect();
+    burst(cr.left+cr.width/2,cr.top+cr.height*.35);
+    setTimeout(()=>burst(cr.left+cr.width*.2,cr.top+80,60),220);
+    setTimeout(()=>burst(cr.left+cr.width*.8,cr.top+80,60),380);
+    couponCard.scrollIntoView({behavior:'smooth',block:'center'});
+  },700);
+});
+
+/* ============================================================
+   滚动入场
+   ============================================================ */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay=(i*.12)+'s';io.observe(el);
+});
 </script>
 </body>
 </html>
